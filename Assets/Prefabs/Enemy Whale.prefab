@@ -64,7 +64,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125572092869203990}
   m_Material: {fileID: 13400000, guid: 19ab2f1cb35caaa4aa7171b980b9adf5, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.42335886
   m_Height: 1.0154594
@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde775906e7ccd74496d05f808770fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limitHeight: -5
+  limitHeight: -2
 --- !u!114 &4305373077130163267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,10 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d538a4c689fb64389c5e102cc0b82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 180
+  speed: 220
   launchForce: 700
   launchAngle: 2
-  outOfWaterClip: {fileID: 8300000, guid: 61833480ec939814782f72aae9d989ae, type: 3}
+  maxVelocity: 9
 --- !u!114 &-7174844332266110930
 MonoBehaviour:
   m_ObjectHideFlags: 0

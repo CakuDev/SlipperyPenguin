@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 2125572092869203990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: -5}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7389838849384694635}
@@ -64,7 +64,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125572092869203990}
   m_Material: {fileID: 13400000, guid: 19ab2f1cb35caaa4aa7171b980b9adf5, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.67234784
   m_Height: 1.544391
@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde775906e7ccd74496d05f808770fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limitHeight: -5
+  limitHeight: -3
 --- !u!114 &4305373077130163267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,9 +108,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d538a4c689fb64389c5e102cc0b82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 180
-  launchForce: 700
-  launchAngle: 3
+  speed: 220
+  launchForce: 750
+  launchAngle: 2
+  maxVelocity: 9
 --- !u!114 &-7174844332266110930
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ TagManager:
   - UI Element
   - Unclosable
   - Music Controller
+  - Ground
   layers:
   - Default
   - TransparentFX
