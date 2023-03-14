@@ -8,7 +8,6 @@ public class ViewDirectionByVelocityController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        //Debug.Log(Quaternion.FromToRotation(Vector3.left, Vector3.back).eulerAngles);
     }
 
     // Update is called once per frame
@@ -17,8 +16,6 @@ public class ViewDirectionByVelocityController : MonoBehaviour
         Vector3 velocity = rb.velocity.normalized;
         velocity.y = 0;
         Vector3 rotation = Quaternion.FromToRotation(Vector3.left, velocity).eulerAngles;
-        Debug.Log("Rotation: " + rotation);
-        Debug.Log("Velocity: " + velocity.normalized);
         transform.rotation = Quaternion.Euler(rotation);
     }
 }

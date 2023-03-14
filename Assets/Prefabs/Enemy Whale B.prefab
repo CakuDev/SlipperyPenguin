@@ -33,8 +33,8 @@ Transform:
   m_GameObject: {fileID: 2125572092869203990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3, z: -5}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7389838849384694635}
   m_Father: {fileID: 0}
@@ -109,9 +109,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 180
-  launchForce: 800
-  launchAngle: 2
-  outOfWaterClip: {fileID: 8300000, guid: 61833480ec939814782f72aae9d989ae, type: 3}
+  launchForce: 700
+  launchAngle: 3
 --- !u!114 &-7174844332266110930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +134,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5563684007058682304, guid: 7097c66f141128d49b4ca5ff2b47a909, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a72d54412de6b3f40825742a9df75665, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

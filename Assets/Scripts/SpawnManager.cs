@@ -104,7 +104,6 @@ public class SpawnManager : MonoBehaviour
         {
             SpawnFish();
             float waitForSpawn = Random.Range(fishSpawnInterval.lowInterval, fishSpawnInterval.highInterval);
-            Debug.Log("Spawn next fish in " + waitForSpawn + " seconds");
             yield return new WaitForSeconds(waitForSpawn);
         }
     }
@@ -116,7 +115,6 @@ public class SpawnManager : MonoBehaviour
         {
             SpawnEnemy();
             float waitForSpawn = Random.Range(enemySpawnInterval.lowInterval, enemySpawnInterval.highInterval);
-            Debug.Log("Spawn next enemy in " + waitForSpawn + " seconds");
             yield return new WaitForSeconds(waitForSpawn);
         }
     }

@@ -7,16 +7,13 @@ public class MovementController : MonoBehaviour
     public float speed = 90;
     public float launchForce = 400;
     public float launchAngle = 2;
-    public AudioClip outOfWaterClip;
 
     private Vector3 movementDirection;
     private Rigidbody rb;
-    private AudioSource source;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        source = GetComponent<AudioSource>();
 
 
         Vector3 focalPointPosition = GameObject.FindGameObjectWithTag(Tags.FOCAL_POINT).transform.position;

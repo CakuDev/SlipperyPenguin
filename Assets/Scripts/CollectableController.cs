@@ -23,6 +23,7 @@ public class CollectableController : MonoBehaviour
     {
         if(other.CompareTag(Tags.PLAYER))
         {
+            other.gameObject.GetComponent<AudioSource>().Play();
             GameObject.FindWithTag(Tags.GAME_CONTROLLER).GetComponent<LevelController>().UpdateScore(puntuationBonus);
             Destroy(gameObjectToDestroy);
         }
