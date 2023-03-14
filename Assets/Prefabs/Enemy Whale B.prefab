@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6951640417878361009}
   - component: {fileID: -7174844332266110930}
   - component: {fileID: -6729093249163797191}
+  - component: {fileID: 5026418007920972752}
   m_Layer: 0
   m_Name: Enemy Whale B
   m_TagString: Untagged
@@ -220,6 +221,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5026418007920972752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125572092869203990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6310f5771fbe37241b8f73056dd16712, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1375167377316856352
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1814,7 +1814,7 @@ MonoBehaviour:
   enemiesProbabilitiesByLevel:
   - level: 1
     probabilities:
-    - 1
+    - 0
     - 1
   - level: 5
     probabilities:
