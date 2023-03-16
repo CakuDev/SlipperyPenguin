@@ -23,7 +23,6 @@ public class MusicController : MonoBehaviour
 
     public void SetGameMusic()
     {
-        Debug.Log("CAMBIAR A MÚSICA DE JUEGO");
         musicSource.clip = gameMusic;
         musicSource.Play();
     }

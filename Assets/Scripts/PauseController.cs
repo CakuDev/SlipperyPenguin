@@ -124,7 +124,6 @@ public class PauseController : MonoBehaviour
     {
         if (HasInputTypeChanged())
         {
-            Debug.Log("CHANGE TO: " + currentInputType.ToString());
             if (currentInputType.Equals(InputType.KEYBOARD))
             {
                 EventSystem.current.SetSelectedGameObject(null);
