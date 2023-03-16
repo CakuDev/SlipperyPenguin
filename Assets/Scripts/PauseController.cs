@@ -13,6 +13,8 @@ public class PauseController : MonoBehaviour
     private bool isPaused;
     private Stack<GameObject> pressedButtonHierarchy;
     private Stack<Canvas> canvasHierarchy;
+    private GameObject currentFirstElement;
+    private InputType currentInputType;
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +22,14 @@ public class PauseController : MonoBehaviour
         pressedButtonHierarchy = new();
         canvasHierarchy = new();
         isPaused = false;
+        currentInputType = InputType.GAMEPAD;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isPaused && Input.GetButtonDown("Start"))
+        CheckInputType();
+        if (!isPaused && Input.GetButtonDown("Start"))
         {
             OnClickPause();
         } else if(isPaused && Input.GetButtonDown("Start"))
@@ -37,7 +41,6 @@ public class PauseController : MonoBehaviour
             {
                 OnClickBack();
             }
-           
         }
     }
 
@@ -49,7 +52,8 @@ public class PauseController : MonoBehaviour
         mainMenuCanvas.gameObject.SetActive(true);
         canvasHierarchy.Push(mainMenuCanvas);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(FindFirstUIElementChild(mainMenuCanvas.transform));
+        currentFirstElement = FindFirstUIElementChild(mainMenuCanvas.transform);
+        if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(FindFirstUIElementChild(mainMenuCanvas.transform));
     }
 
     public void OnClickContinue()
@@ -68,7 +72,8 @@ public class PauseController : MonoBehaviour
         currentCanvas.gameObject.SetActive(false);
         previousCanvas.gameObject.SetActive(true);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(pressedButtonHierarchy.Pop());
+        currentFirstElement = FindFirstUIElementChild(mainMenuCanvas.transform);
+        if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(pressedButtonHierarchy.Pop());
     }
 
     public void EnterSettingsMenu(GameObject pressedButton)
@@ -78,7 +83,8 @@ public class PauseController : MonoBehaviour
         settingsCanvas.gameObject.SetActive(true);
         canvasHierarchy.Push(settingsCanvas);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(FindFirstUIElementChild(settingsCanvas.transform));
+        currentFirstElement = FindFirstUIElementChild(settingsCanvas.transform);
+        if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(currentFirstElement);
     }
 
     public void ExitSettingsMenu()
@@ -86,7 +92,8 @@ public class PauseController : MonoBehaviour
         mainMenuCanvas.gameObject.SetActive(true);
         settingsCanvas.gameObject.SetActive(false);
         EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(pressedButtonHierarchy.Pop());
+        currentFirstElement = FindFirstUIElementChild(mainMenuCanvas.transform);
+        if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(pressedButtonHierarchy.Pop());
     }
 
     public bool IsGamePaused()
@@ -111,5 +118,87 @@ public class PauseController : MonoBehaviour
     {
         GameObject.FindWithTag(Tags.MUSIC_CONTROLLER).GetComponent<MusicController>().SetIntroMusic();
         SceneManager.LoadScene(Scenes.GAME_MENU);
+    }
+
+    public void CheckInputType()
+    {
+        if (HasInputTypeChanged())
+        {
+            Debug.Log("CHANGE TO: " + currentInputType.ToString());
+            if (currentInputType.Equals(InputType.KEYBOARD))
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+            else
+            {
+                EventSystem.current.SetSelectedGameObject(currentFirstElement);
+            }
+        }
+    }
+
+    private bool HasInputTypeChanged()
+    {
+        if (IsMouseKeyboard())
+        {
+            InputType current = currentInputType;
+            currentInputType = InputType.KEYBOARD;
+            return !current.Equals(currentInputType);
+        }
+        else if (IsControllerInput())
+        {
+            InputType current = currentInputType;
+            currentInputType = InputType.GAMEPAD;
+            return !current.Equals(currentInputType);
+        }
+
+        return false;
+    }
+
+    private bool IsMouseKeyboard()
+    {
+        // mouse movement
+        if (Input.GetAxis("Mouse X") != 0.0f ||
+            Input.GetAxis("Mouse Y") != 0.0f)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool IsControllerInput()
+    {
+        // joystick buttons
+        if (Input.GetKey(KeyCode.Joystick1Button0) ||
+           Input.GetKey(KeyCode.Joystick1Button1) ||
+           Input.GetKey(KeyCode.Joystick1Button2) ||
+           Input.GetKey(KeyCode.Joystick1Button3) ||
+           Input.GetKey(KeyCode.Joystick1Button4) ||
+           Input.GetKey(KeyCode.Joystick1Button5) ||
+           Input.GetKey(KeyCode.Joystick1Button6) ||
+           Input.GetKey(KeyCode.Joystick1Button7) ||
+           Input.GetKey(KeyCode.Joystick1Button8) ||
+           Input.GetKey(KeyCode.Joystick1Button9) ||
+           Input.GetKey(KeyCode.Joystick1Button10) ||
+           Input.GetKey(KeyCode.Joystick1Button11) ||
+           Input.GetKey(KeyCode.Joystick1Button12) ||
+           Input.GetKey(KeyCode.Joystick1Button13) ||
+           Input.GetKey(KeyCode.Joystick1Button14) ||
+           Input.GetKey(KeyCode.Joystick1Button15) ||
+           Input.GetKey(KeyCode.Joystick1Button16) ||
+           Input.GetKey(KeyCode.Joystick1Button17) ||
+           Input.GetKey(KeyCode.Joystick1Button18) ||
+           Input.GetKey(KeyCode.Joystick1Button19))
+        {
+            return true;
+        }
+
+        // joystick axis
+        if (Input.GetAxis("Horizontal") != 0.0f ||
+           Input.GetAxis("Vertical") != 0.0f)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
