@@ -117,7 +117,9 @@ public class PauseController : MonoBehaviour
     public void ExitGame()
     {
         GameObject.FindWithTag(Tags.MUSIC_CONTROLLER).GetComponent<MusicController>().SetIntroMusic();
+        DontDestroyBehaviour.DestroyObject(GameObject.Find("GameController"));
         SceneManager.LoadScene(Scenes.GAME_MENU);
+        Time.timeScale = 1;
     }
 
     public void CheckInputType()
