@@ -21,7 +21,7 @@ public class CollectableController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(Tags.PLAYER))
+        if (other.CompareTag(Tags.PLAYER))
         {
             other.gameObject.GetComponent<AudioSource>().Play();
             GameObject.FindWithTag(Tags.GAME_CONTROLLER).GetComponent<LevelController>().UpdateScore(puntuationBonus);

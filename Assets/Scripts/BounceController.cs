@@ -22,7 +22,7 @@ public class BounceController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.TryGetComponent(out Rigidbody collidedRb)) { 
+        if (collision.gameObject.TryGetComponent(out Rigidbody collidedRb) && !(collision.gameObject.CompareTag(Tags.PLAYER) && this.CompareTag(Tags.COLLECTABLE))) {
             Vector3 direction = (transform.position - collision.transform.position);
             direction.y = 0;
             direction.Normalize();
