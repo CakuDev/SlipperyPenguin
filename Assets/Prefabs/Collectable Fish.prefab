@@ -37,6 +37,7 @@ Transform:
   m_Children:
   - {fileID: 2049693487554134214}
   - {fileID: 5385637379912212484}
+  - {fileID: 3902998792435140791}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   limitHeight: -1
+  objectPooling: {fileID: 0}
 --- !u!114 &-6185357403862163141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,8 +98,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 100
   launchForce: 350
-  launchAngle: 2
+  launchAngle: 1.5
   maxVelocity: 9
+  frontView: {fileID: 3902998792435140791}
 --- !u!114 &749951086100184703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +282,37 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &9052183720129834308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3902998792435140791}
+  m_Layer: 7
+  m_Name: Front View
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3902998792435140791
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9052183720129834308}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 648784995200782906}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5563944266587621359
 PrefabInstance:
   m_ObjectHideFlags: 0

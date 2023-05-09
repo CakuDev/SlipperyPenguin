@@ -8,6 +8,7 @@ public class MovementController : MonoBehaviour
     public float launchForce = 400;
     public float launchAngle = 2;
     public float maxVelocity = 9;
+    public Transform frontView;
 
     private Vector3 movementDirection;
     private Rigidbody rb;
@@ -15,13 +16,21 @@ public class MovementController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        StartCoroutine(ChangeRbTriggerProperty());
+        
+    }
 
+    public void OnCreate()
+    {
+        GetComponent<Collider>().isTrigger = true;
+        StartCoroutine(ChangeRbTriggerProperty());
+        rb.velocity = Vector3.zero;
+     
         Vector3 focalPointPosition = GameObject.FindGameObjectWithTag(Tags.FOCAL_POINT).transform.position;
         movementDirection = (focalPointPosition.normalized - transform.position);
         movementDirection.y = 0;
         movementDirection.Normalize();
         RandomMovementRotation();
+        JumpFromWater();
     }
 
     IEnumerator ChangeRbTriggerProperty()
@@ -32,6 +41,11 @@ public class MovementController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Change movement direction according to the rotation (item interaction)
+        if(frontView != null)
+        {
+            movementDirection = (frontView.position - transform.position).normalized;
+        }
         rb.AddForce(speed * movementDirection);
         ManageMaxVelocity();
     }
@@ -83,7 +97,6 @@ public class MovementController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Vector3 to = transform.position + movementDirection*1.5f;
-        Gizmos.DrawCube(to, Vector3.one/2);
+        Gizmos.DrawCube((frontView.position), Vector3.one/2);
     }
 }

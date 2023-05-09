@@ -6,6 +6,9 @@ public class DestroyOnFall : MonoBehaviour
 {
     public float limitHeight = -5;
 
+    [HideInInspector]
+    public ObjectPooling objectPooling;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +23,9 @@ public class DestroyOnFall : MonoBehaviour
             if(transform.CompareTag(Tags.PLAYER))
             {
                 GameObject.Find("Level Manager").GetComponent<LevelController>().EndGame();
+                return;
             }
-            Destroy(gameObject);
+            objectPooling.SaveObject(gameObject);
         }
     }
 }

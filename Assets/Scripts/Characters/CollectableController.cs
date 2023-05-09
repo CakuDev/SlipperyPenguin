@@ -25,7 +25,7 @@ public class CollectableController : MonoBehaviour
         {
             other.gameObject.GetComponent<AudioSource>().Play();
             GameObject.FindWithTag(Tags.GAME_CONTROLLER).GetComponent<LevelController>().UpdateScore(puntuationBonus);
-            Destroy(gameObjectToDestroy);
+            gameObjectToDestroy.GetComponent<DestroyOnFall>().objectPooling.SaveObject(gameObjectToDestroy);
         }
     }
 }

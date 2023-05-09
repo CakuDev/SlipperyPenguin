@@ -12,4 +12,5 @@ public class Tags
     public static string UNCLOSABLE = "Unclosable";
     public static string MUSIC_CONTROLLER = "Music Controller";
     public static string GROUND = "Ground";
+    public static string ENEMY = "Enemy";
 }

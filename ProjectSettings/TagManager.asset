@@ -10,6 +10,7 @@ TagManager:
   - Unclosable
   - Music Controller
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX

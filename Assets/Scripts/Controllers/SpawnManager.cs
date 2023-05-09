@@ -26,8 +26,8 @@ public class SpawnManager : MonoBehaviour
         public float highInterval;
     }
 
-    public GameObject[] enemies;
-    public GameObject[] fishes;
+    public ObjectPooling[] enemyPoolings;
+    public ObjectPooling[] fishPoolings;
     public float initialSpawnFishInterval = 2f;
     public float spawnFishIntervalIncrease = 0.1f;
     public float initialSpawnEnemyInterval = 5f;
@@ -85,16 +85,16 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        GameObject enemyToInstantiate = GetRandomObjectWithProbs(enemies, enemiesProbabilities);
-        GameObject enemy = Instantiate(enemyToInstantiate, GetRandomSpawnPosition(), enemyToInstantiate.transform.rotation);
-        enemy.GetComponent<MovementController>().JumpFromWater();
+        GameObject enemy = GetRandomObjectWithProbs(enemyPoolings, enemiesProbabilities);
+        enemy.transform.position = GetRandomSpawnPosition();
+        enemy.GetComponent<MovementController>().OnCreate();
     }
 
     void SpawnFish()
     {
-        int fishIndex = Random.Range(0, fishes.Length);
-        GameObject fish = Instantiate(fishes[fishIndex], GetRandomSpawnPosition(), fishes[fishIndex].transform.rotation);
-        fish.GetComponent<MovementController>().JumpFromWater();
+        GameObject fish = fishPoolings[Random.Range(0, fishPoolings.Length)].GetObject();
+        fish.transform.position = GetRandomSpawnPosition();
+        fish.GetComponent<MovementController>().OnCreate();
     }
 
     IEnumerator RepeatSpawnFish()
@@ -143,17 +143,17 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    GameObject GetRandomObjectWithProbs(GameObject[] objects, float[] probabilities)
+    GameObject GetRandomObjectWithProbs(ObjectPooling[] objectPoolings, float[] probabilities)
     {
         float prob = Random.Range(0, 1f);
         float lowBound = 0;
         float highBound = probabilities[0];
 
-        for(int i = 0; i < objects.Length; i++)
+        for(int i = 0; i < objectPoolings.Length; i++)
         {
             if (prob >= lowBound && prob <= highBound)
             {
-                return objects[i];
+                return objectPoolings[i].GetObject();
             }
 
             lowBound = probabilities[i];

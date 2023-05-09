@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 5026418007920972752}
   m_Layer: 0
   m_Name: Enemy Whale B
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,6 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7389838849384694635}
+  - {fileID: 281402829353309309}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -83,6 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   limitHeight: -3
+  objectPooling: {fileID: 0}
 --- !u!114 &4305373077130163267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,6 +114,7 @@ MonoBehaviour:
   launchForce: 750
   launchAngle: 2
   maxVelocity: 9
+  frontView: {fileID: 281402829353309309}
 --- !u!114 &-7174844332266110930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,6 +236,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6310f5771fbe37241b8f73056dd16712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8292062443950892306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 281402829353309309}
+  m_Layer: 0
+  m_Name: Front View
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &281402829353309309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8292062443950892306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2125572092869203986}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1375167377316856352
 PrefabInstance:
   m_ObjectHideFlags: 0

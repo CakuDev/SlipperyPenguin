@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,16 +9,24 @@ public class PlayerController : MonoBehaviour
     public float maxVelocity;
     public float gravityMultiplier;
     public Animator animator;
+    public Image itemImage;
 
     private Rigidbody playerRb;
     private Vector3 direction;
     private Vector3 lastRotationVector;
+    [HideInInspector]
+    public ItemBehaviour itemToUse;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityMultiplier;
+    }
+
+    private void Update()
+    {
+        UseItem();
     }
 
     // Update is called once per frame
@@ -36,6 +45,16 @@ public class PlayerController : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         playerRb.AddForce(verticalInput * movementSpeed * Vector3.forward);
         direction = new(horizontalInput, 0, verticalInput);
+    }
+
+    void UseItem()
+    {
+        if(Input.GetButton("Fire1") && itemToUse != null)
+        {
+            itemToUse.OnActive();
+            itemImage.sprite = null;
+            itemToUse = null;
+        }
     }
 
     void ManageMaxVelocity()
