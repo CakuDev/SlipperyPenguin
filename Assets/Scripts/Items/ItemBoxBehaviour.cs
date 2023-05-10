@@ -17,6 +17,7 @@ public class ItemBoxBehaviour : MonoBehaviour
         if(collision.CompareTag(Tags.PLAYER))
         {
             itemImage.sprite = itemBehaviour.sprite;
+            itemImage.color = Color.white;
             collision.GetComponent<PlayerController>().itemToUse = itemBehaviour;
             itemBoxPooling.SaveObject(gameObject);
         }

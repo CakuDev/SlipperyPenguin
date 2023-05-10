@@ -6,30 +6,52 @@ public class AttractFishBehaviour : ItemBehaviour
 {
     public float attractForce = 400;
     public float range = 7;
-    CapsuleCollider playerCollider;
+    Transform playerTransform;
+
+    List<Transform> collectables;
 
     private void Awake()
     {
-        playerCollider = GameObject.FindWithTag(Tags.PLAYER).GetComponent<CapsuleCollider>();
+        playerTransform = GameObject.FindWithTag(Tags.PLAYER).transform;
+        collectables = new();
     }
 
     private void FixedUpdate()
     {
-        GameObject[] collectables = GameObject.FindGameObjectsWithTag(Tags.COLLECTABLE);
-        foreach(GameObject collectable in collectables) {
-            float distance = Vector3.Distance(playerCollider.transform.position, collectable.transform.position);
+        foreach(Transform collectable in collectables) {
+            float distance = Vector3.Distance(playerTransform.position, collectable.transform.position);
             if (distance < range)
             {
                 float forceByDistance = 1 - (distance / range);
-                Vector3 direction = (playerCollider.transform.position - collectable.transform.position).normalized;
+                Vector3 direction = (playerTransform.position - collectable.transform.position).normalized;
                 collectable.GetComponent<Rigidbody>().AddForce(attractForce * forceByDistance * direction, ForceMode.Force);
             }
             
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+        if(other.CompareTag(Tags.COLLECTABLE))
+        {
+            collectables.Add(other.transform);
+            Debug.Log(collectables.Count);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(Tags.COLLECTABLE))
+        {
+            collectables.Remove(other.transform);
+            Debug.Log(collectables.Count);
+        }
+    }
+
     public override void OnActive()
     {
+        collectables = new();
         base.OnActive();
     }
 

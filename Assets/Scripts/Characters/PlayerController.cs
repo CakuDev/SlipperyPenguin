@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             itemToUse.OnActive();
             itemImage.sprite = null;
+            itemImage.color = Color.clear;
             itemToUse = null;
         }
     }
