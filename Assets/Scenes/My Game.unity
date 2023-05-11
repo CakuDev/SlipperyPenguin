@@ -634,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: f6df03be153692648bff0e2e4bd16999, type: 3}
-  durationInSeconds: 4
+  durationInSeconds: 6
   attractForce: 100
 --- !u!64 &119640023
 MeshCollider:
@@ -861,7 +861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 5c7fe10a8d6e995419fe2b5323a74d32, type: 3}
-  durationInSeconds: 4
+  durationInSeconds: 8
   refuseForce: 350
 --- !u!64 &220434701
 MeshCollider:
@@ -1025,7 +1025,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0b6cea6ac27db4b4cad22dc73ef0f12e, type: 2}
+  - {fileID: 2100000, guid: f52feba99b879a144ac1d5c98da9d5aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1901,8 +1901,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 1341356824}
   spawnItemBoxInterval:
-    lowInterval: 6
-    highInterval: 8
+    lowInterval: 8
+    highInterval: 10
   itemBoxPooling: {fileID: 759915333}
   items:
   - {fileID: 119640022}
