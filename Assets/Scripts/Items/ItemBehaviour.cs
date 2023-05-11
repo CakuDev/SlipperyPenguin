@@ -9,6 +9,7 @@ public abstract class ItemBehaviour : MonoBehaviour
     public virtual void OnActive()
     {
         gameObject.SetActive(true);
+        transform.parent.gameObject.SetActive(true);
         StartCoroutine(Desactivate());
     }
 
@@ -21,6 +22,7 @@ public abstract class ItemBehaviour : MonoBehaviour
     public virtual void OnDesactivate()
     {
         gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 
 

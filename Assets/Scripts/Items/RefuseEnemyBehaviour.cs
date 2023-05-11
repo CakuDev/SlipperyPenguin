@@ -5,25 +5,21 @@ using UnityEngine;
 public class RefuseEnemyBehaviour : ItemBehaviour
 {
     public float refuseForce = 200;
-    public float range = 7;
-    CapsuleCollider playerCollider;
+    
+    Transform playerTransform;
+    List<Transform> enemies;
 
     private void Awake()
     {
-        playerCollider = GameObject.FindWithTag(Tags.PLAYER).GetComponent<CapsuleCollider>();
+        enemies = new();
+        playerTransform = GameObject.FindWithTag(Tags.PLAYER).transform;
     }
 
     private void FixedUpdate()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(Tags.ENEMY);
-        foreach(GameObject enemy in enemies) {
-            float distance = Vector3.Distance(playerCollider.transform.position, enemy.transform.position);
-            if (distance < range)
-            {
-                float forceByDistance = 1 - (distance / range);
-                Vector3 direction = (enemy.transform.position - playerCollider.transform.position).normalized;
-                enemy.GetComponent<Rigidbody>().AddForce(forceByDistance * refuseForce * direction, ForceMode.Force);
-            }
+        foreach(Transform enemy in enemies) {
+            Vector3 direction = (enemy.position - playerTransform.position).normalized;
+            enemy.GetComponent<Rigidbody>().AddForce( refuseForce * direction, ForceMode.Force);
         }
     }
 
@@ -34,11 +30,23 @@ public class RefuseEnemyBehaviour : ItemBehaviour
 
     public override void OnDesactivate()
     {
+        enemies = new();
         base.OnDesactivate();
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter(Collider other)
     {
-        Gizmos.DrawWireSphere(transform.position, range);
+        if (other.CompareTag(Tags.ENEMY))
+        {
+            enemies.Add(other.transform);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(Tags.COLLECTABLE))
+        {
+            enemies.Remove(other.transform);
+        }
     }
 }

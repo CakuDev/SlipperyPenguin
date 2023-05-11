@@ -5,9 +5,8 @@ using UnityEngine;
 public class AttractFishBehaviour : ItemBehaviour
 {
     public float attractForce = 400;
-    public float range = 7;
+    
     Transform playerTransform;
-
     List<Transform> collectables;
 
     private void Awake()
@@ -19,33 +18,27 @@ public class AttractFishBehaviour : ItemBehaviour
     private void FixedUpdate()
     {
         foreach(Transform collectable in collectables) {
-            float distance = Vector3.Distance(playerTransform.position, collectable.transform.position);
-            if (distance < range)
-            {
-                float forceByDistance = 1 - (distance / range);
-                Vector3 direction = (playerTransform.position - collectable.transform.position).normalized;
-                collectable.GetComponent<Rigidbody>().AddForce(attractForce * forceByDistance * direction, ForceMode.Force);
-            }
+            Vector3 direction = (playerTransform.position - collectable.transform.position).normalized;
+            collectable.GetComponent<Rigidbody>().AddForce(attractForce * direction, ForceMode.Impulse);
             
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
-        if(other.CompareTag(Tags.COLLECTABLE))
+        Transform parent = other.transform.parent;
+        if(parent.CompareTag(Tags.COLLECTABLE))
         {
-            collectables.Add(other.transform);
-            Debug.Log(collectables.Count);
+            collectables.Add(parent);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(Tags.COLLECTABLE))
+        Transform parent = other.transform.parent;
+        if (parent.CompareTag(Tags.COLLECTABLE))
         {
-            collectables.Remove(other.transform);
-            Debug.Log(collectables.Count);
+            collectables.Remove(parent);
         }
     }
 
@@ -58,10 +51,5 @@ public class AttractFishBehaviour : ItemBehaviour
     public override void OnDesactivate()
     {
         base.OnDesactivate();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
