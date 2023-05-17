@@ -13,7 +13,8 @@ public class LevelController : MonoBehaviour
     public GameController gameController;
 
     private Coroutine timerCoroutine;
-    private int currentLevel = 1;
+    [HideInInspector]
+    public int currentLevel = 1;
     private int score = 0;
     private int timer = 0;
     private int scorePerLevel = 100;
@@ -28,7 +29,6 @@ public class LevelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
     }
 
     public void UpdateScore(int aditionalPoints)

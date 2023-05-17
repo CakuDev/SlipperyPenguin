@@ -13,4 +13,5 @@ public class Tags
     public static string MUSIC_CONTROLLER = "Music Controller";
     public static string GROUND = "Ground";
     public static string ENEMY = "Enemy";
+    public static string ITEM_BOX = "Item Box";
 }

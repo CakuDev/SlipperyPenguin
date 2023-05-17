@@ -11,6 +11,7 @@ TagManager:
   - Music Controller
   - Ground
   - Enemy
+  - Item Box
   layers:
   - Default
   - TransparentFX

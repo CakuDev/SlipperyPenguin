@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ItemBoxController : MonoBehaviour
 {
     public Image itemImage;
+    public int maxItemBox;
     public SpawnManager.SpawnInterval spawnItemBoxInterval;
     public ObjectPooling itemBoxPooling;
     public List<ItemBehaviour> items;
@@ -18,8 +19,12 @@ public class ItemBoxController : MonoBehaviour
 
     void SpawnItemBox()
     {
+        if (GameObject.FindGameObjectsWithTag(Tags.ITEM_BOX).Length >= maxItemBox) return;
         // Get an item box, set its attributes and place it on the map
         GameObject itemBox = itemBoxPooling.GetObject();
+
+        itemBox.GetComponent<AudioSource>().Play();
+
         ItemBoxBehaviour itemBoxBehaviour = itemBox.GetComponent<ItemBoxBehaviour>();
         itemBoxBehaviour.itemBehaviour = items[Random.Range(0, items.Count)];
         itemBoxBehaviour.itemImage = itemImage;

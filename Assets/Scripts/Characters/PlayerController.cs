@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float gravityMultiplier;
     public Animator animator;
     public Image itemImage;
+    public AudioSource audioSource;
 
     private Rigidbody playerRb;
     private Vector3 direction;
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
     public void RotatePlayer()
     {
         Vector3 rotationVector;
-        if (direction.magnitude != 0)
+        if (direction.magnitude >= 0.2f)
         {
             rotationVector = Quaternion.FromToRotation(Vector3.back, direction.normalized).eulerAngles;
             lastRotationVector = rotationVector;

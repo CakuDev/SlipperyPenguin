@@ -65,9 +65,9 @@ public class SpawnManager : MonoBehaviour
             enemySpawnIntervalByLevelDict.Add(entry.level, entry.interval);
         }
 
-        spawnBoundaries = new GameObject[transform.childCount];
-        for(int i = 0; i < transform.childCount; i++) {
-            spawnBoundaries[i] = transform.GetChild(i).gameObject;
+        spawnBoundaries = new GameObject[transform.GetChild(0).childCount];
+        for(int i = 0; i < transform.GetChild(0).childCount; i++) {
+            spawnBoundaries[i] = transform.GetChild(0).GetChild(i).gameObject;
         }
 
         SetSpawnIntervalVariablesByLevel(1);

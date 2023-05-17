@@ -5,7 +5,8 @@ using UnityEngine;
 public class RefuseEnemyBehaviour : ItemBehaviour
 {
     public float refuseForce = 200;
-    
+    public AudioSource audioSource;
+
     Transform playerTransform;
     List<Transform> enemies;
 
@@ -19,13 +20,15 @@ public class RefuseEnemyBehaviour : ItemBehaviour
     {
         foreach(Transform enemy in enemies) {
             Vector3 direction = (enemy.position - playerTransform.position).normalized;
-            enemy.GetComponent<Rigidbody>().AddForce( refuseForce * direction, ForceMode.Force);
+            enemy.GetComponent<Rigidbody>().AddForce(refuseForce * direction, ForceMode.Force);
         }
     }
 
     public override void OnActive()
     {
         base.OnActive();
+        audioSource.Stop();
+        audioSource.PlayOneShot(audioSource.clip);
     }
 
     public override void OnDesactivate()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class AttractFishBehaviour : ItemBehaviour
 {
     public float attractForce = 400;
+    public AudioSource audioSource;
     
     Transform playerTransform;
     List<Transform> collectables;
@@ -20,7 +21,6 @@ public class AttractFishBehaviour : ItemBehaviour
         foreach(Transform collectable in collectables) {
             Vector3 direction = (playerTransform.position - collectable.transform.position).normalized;
             collectable.GetComponent<Rigidbody>().AddForce(attractForce * direction, ForceMode.Impulse);
-            
         }
     }
 
@@ -44,8 +44,10 @@ public class AttractFishBehaviour : ItemBehaviour
 
     public override void OnActive()
     {
-        collectables = new();
         base.OnActive();
+        collectables = new();
+        audioSource.Stop();
+        audioSource.PlayOneShot(audioSource.clip);
     }
 
     public override void OnDesactivate()

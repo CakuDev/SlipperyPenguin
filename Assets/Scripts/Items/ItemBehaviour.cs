@@ -6,11 +6,14 @@ public abstract class ItemBehaviour : MonoBehaviour
 {
     public Sprite sprite;
     public float durationInSeconds = 5f;
+    Coroutine currentCoroutine;
+
     public virtual void OnActive()
     {
         gameObject.SetActive(true);
         transform.parent.gameObject.SetActive(true);
-        StartCoroutine(Desactivate());
+        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
+        currentCoroutine = StartCoroutine(Desactivate());
     }
 
     IEnumerator Desactivate()
@@ -23,6 +26,7 @@ public abstract class ItemBehaviour : MonoBehaviour
     {
         gameObject.SetActive(false);
         transform.parent.gameObject.SetActive(false);
+        currentCoroutine = null;
     }
 
 
