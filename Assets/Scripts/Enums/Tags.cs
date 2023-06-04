@@ -14,4 +14,6 @@ public class Tags
     public static string GROUND = "Ground";
     public static string ENEMY = "Enemy";
     public static string ITEM_BOX = "Item Box";
+    public static string LEADERBOARD_REPOSITORY = "Leaderboard Repository";
+    public static string USER_ACCOUNT_CONTROLLER = "User Account Controller";
 }

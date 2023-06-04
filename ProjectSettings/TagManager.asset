@@ -12,6 +12,8 @@ TagManager:
   - Ground
   - Enemy
   - Item Box
+  - Leaderboard Repository
+  - User Account Controller
   layers:
   - Default
   - TransparentFX

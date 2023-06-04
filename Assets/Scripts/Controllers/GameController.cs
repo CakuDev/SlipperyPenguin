@@ -17,8 +17,6 @@ public class GameController : MonoBehaviour
 
     public string GetTimerFormat()
     {
-        int minutes = timer / 60;
-        int seconds = timer % 60;
-        return string.Format("{0}:{1}", minutes.ToString("00"), seconds.ToString("00"));
+        return TimerUtils.FormatTime(timer);
     }
 }

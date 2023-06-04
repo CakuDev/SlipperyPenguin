@@ -11,23 +11,26 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public Image itemImage;
     public AudioSource audioSource;
+    public Joystick joystick;
 
     private Rigidbody playerRb;
     private Vector3 direction;
     private Vector3 lastRotationVector;
     [HideInInspector]
     public ItemBehaviour itemToUse;
+    private bool isPlatformMobile;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityMultiplier;
+        isPlatformMobile = PlatformUtils.IsPlatformMobile();
     }
 
     private void Update()
     {
-        UseItem();
+        CheckUseItem();
     }
 
     // Update is called once per frame
@@ -41,16 +44,21 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontalInput = isPlatformMobile ? joystick.Direction.x : Input.GetAxis("Horizontal");
         playerRb.AddForce(horizontalInput * movementSpeed * Vector3.right);
-        float verticalInput = Input.GetAxis("Vertical");
+        float verticalInput = isPlatformMobile ? joystick.Direction.y : Input.GetAxis("Vertical");
         playerRb.AddForce(verticalInput * movementSpeed * Vector3.forward);
         direction = new(horizontalInput, 0, verticalInput);
     }
 
-    void UseItem()
+    void CheckUseItem()
     {
-        if(Input.GetButton("Fire1") && itemToUse != null)
+        if(Input.GetButton("Fire1")) UseItem();
+    }
+
+    public void UseItem()
+    {
+        if(itemToUse != null)
         {
             itemToUse.OnActive();
             itemImage.sprite = null;

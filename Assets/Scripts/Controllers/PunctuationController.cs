@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using LootLocker.Requests;
 
 public class PunctuationController : MonoBehaviour
 {
@@ -11,23 +12,30 @@ public class PunctuationController : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text levelText;
     public TMP_Text timerText;
+    public GameObject leaderboardRowPrefab;
+    public Transform localLeaderboardList;
+    public Transform onlineLeaderboardList;
     
     private GameController gameController;
     private GameObject currentFirstElement;
     private InputType currentInputType;
+    private string leaderboardKey = "score_leaderboard";
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
+        string username = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>().username;
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        RowInfo row = new(username, gameController.currentLevel, gameController.score, gameController.timer);
         scoreText.text = "Score: " + gameController.score.ToString();
         levelText.text = "Level: " + gameController.currentLevel.ToString();
         timerText.text = "Time: " + gameController.GetTimerFormat();
         DontDestroyBehaviour.DestroyObject(gameController.gameObject);
-
         EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = GameObject.Find("Play Again Button");
         EventSystem.current.SetSelectedGameObject(currentFirstElement);
+
+        ManageLeaderboard(row);
     }
 
     void Update()
@@ -138,5 +146,64 @@ public class PunctuationController : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void ManageLeaderboard(RowInfo row)
+    {
+        ManageLocalLeaderboard(row);
+        ManageOnlineLeaderboard(row);
+    }
+
+    private void ManageLocalLeaderboard(RowInfo row)
+    {
+        LocalLeaderboardRepository repository = GameObject.FindWithTag(Tags.LEADERBOARD_REPOSITORY).GetComponent<LocalLeaderboardRepository>();
+        List<RowInfo> rows = repository.SaveLeaderboardRow(row);
+        for (int i = 0; i < rows.Count; i++)
+        {
+            if (i == 50) break;
+            RowInfo currentRow = rows[i];
+            LeaderboardRowBehaviour rowBehaviour = Instantiate(leaderboardRowPrefab, localLeaderboardList).GetComponent<LeaderboardRowBehaviour>();
+            rowBehaviour.OnCreate(i + 1, currentRow.name, currentRow.level, currentRow.score, currentRow.time);
+            if (currentRow.Equals(row)) rowBehaviour.HighlightRow();
+        }
+    }
+
+    private void ManageOnlineLeaderboard(RowInfo row)
+    {
+        UserAccountController userAccountController = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>();
+        string memberId = userAccountController.memberId;
+
+        LootLockerSDKManager.SubmitScore(memberId, row.score, leaderboardKey, row.level.ToString() + "," + row.time.ToString(), (response) =>
+        {
+            if (!response.success)
+            {
+                Debug.Log("Error while submitting the score");
+                return;
+            }
+            int count = 50;
+            LootLockerSDKManager.GetScoreList(leaderboardKey, count, 0, (response) =>
+            {
+                if (response.statusCode == 200)
+                {
+                    for (int i = 0; i < response.items.Length; i++)
+                    {
+                        if (i == 50) break;
+                        LootLockerLeaderboardMember currentRow = response.items[i];
+                        string name = currentRow.player.name;
+                        string[] levelTime = currentRow.metadata.Split(",");
+                        int level = int.Parse(levelTime[0]);
+                        int time = int.Parse(levelTime[1]);
+                        int score = currentRow.score;
+                        LeaderboardRowBehaviour rowBehaviour = Instantiate(leaderboardRowPrefab, onlineLeaderboardList).GetComponent<LeaderboardRowBehaviour>();
+                        rowBehaviour.OnCreate(i + 1, name, level, score, time);
+                        if (row.name == name) rowBehaviour.HighlightRow();
+                    }
+                }
+                else
+                {
+                    Debug.Log("failed: " + response.Error);
+                }
+            });
+        });
     }
 }
