@@ -999,8 +999,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220434698}
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: 0, y: -1.9211113, z: 3.08}
-  m_LocalScale: {x: 49.695297, y: 433.00784, z: 587.28754}
+  m_LocalPosition: {x: 0, y: -1.4, z: 3.6}
+  m_LocalScale: {x: 76.7, y: 151, z: 580}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 257196570}
@@ -1020,7 +1020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: d73977f46124b5c40a4aef67ee230a87, type: 3}
   durationInSeconds: 5
-  refuseForce: 200
+  refuseForce: 50
   audioSource: {fileID: 220434702}
 --- !u!64 &220434701
 MeshCollider:
@@ -2737,7 +2737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000022888
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_AnchoredPosition.y

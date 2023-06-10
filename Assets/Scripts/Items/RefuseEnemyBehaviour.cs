@@ -20,7 +20,7 @@ public class RefuseEnemyBehaviour : ItemBehaviour
     {
         foreach(Transform enemy in enemies) {
             Vector3 direction = (enemy.position - playerTransform.position).normalized;
-            enemy.GetComponent<Rigidbody>().AddForce(refuseForce * direction, ForceMode.Force);
+            enemy.GetComponent<Rigidbody>().AddForce(refuseForce * direction, ForceMode.Impulse);
         }
     }
 
