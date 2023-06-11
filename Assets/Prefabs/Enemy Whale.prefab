@@ -146,6 +146,7 @@ MonoBehaviour:
   launchAngle: 2
   maxVelocity: 9
   frontView: {fileID: 8785210679408610485}
+  splashGameObject: {fileID: 1001209505210446, guid: 172998df67304734aaab369580dd9b98, type: 3}
 --- !u!114 &-7174844332266110930
 MonoBehaviour:
   m_ObjectHideFlags: 0

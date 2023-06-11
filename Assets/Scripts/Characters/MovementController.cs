@@ -9,6 +9,7 @@ public class MovementController : MonoBehaviour
     public float launchAngle = 2;
     public float maxVelocity = 9;
     public Transform frontView;
+    public GameObject splashGameObject;
 
     private Vector3 movementDirection;
     private Rigidbody rb;
@@ -31,6 +32,7 @@ public class MovementController : MonoBehaviour
         movementDirection.Normalize();
         RandomMovementRotation();
         JumpFromWater();
+        SpawnSplashParticle();
     }
 
     IEnumerator ChangeRbTriggerProperty()
@@ -98,5 +100,10 @@ public class MovementController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawCube((frontView.position), Vector3.one/2);
+    }
+
+    private void SpawnSplashParticle()
+    {
+        ParticleSystem splashParticle = Instantiate(splashGameObject, transform.position, transform.rotation).GetComponent<ParticleSystem>();
     }
 }

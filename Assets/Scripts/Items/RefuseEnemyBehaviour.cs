@@ -19,7 +19,9 @@ public class RefuseEnemyBehaviour : ItemBehaviour
     private void FixedUpdate()
     {
         foreach(Transform enemy in enemies) {
-            Vector3 direction = (enemy.position - playerTransform.position).normalized;
+            Vector3 direction = (enemy.position - playerTransform.position);
+            direction.y = 0;
+            direction.Normalize();
             enemy.GetComponent<Rigidbody>().AddForce(refuseForce * direction, ForceMode.Impulse);
         }
     }
