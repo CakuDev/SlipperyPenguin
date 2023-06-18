@@ -10,6 +10,8 @@ public class PauseController : MonoBehaviour
     public Canvas mainMenuCanvas;
     public Canvas settingsCanvas;
 
+    [HideInInspector]
+    public bool hasEnded;
     private bool isPaused;
     private Stack<GameObject> pressedButtonHierarchy;
     private Stack<Canvas> canvasHierarchy;
@@ -29,6 +31,7 @@ public class PauseController : MonoBehaviour
     void Update()
     {
         CheckInputType();
+        if (hasEnded) return;
         if (!isPaused && Input.GetButtonDown("Start"))
         {
             OnClickPause();

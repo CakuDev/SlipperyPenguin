@@ -16,21 +16,37 @@ public class ItemBoxBehaviour : MonoBehaviour
     [HideInInspector]
     public ObjectPooling itemBoxPooling;
 
+    public void CollectItemBox(PlayerController playerController)
+    {
+        if (playerController.itemToUse != null)
+        {
+            playerController.audioSource.PlayOneShot(notPickUpSFX);
+            childAnimator.SetTrigger("notPickUp");
+            playerController.itemBoxOverposition = this;
+            return;
+        }
+        itemImage.sprite = itemBehaviour.sprite;
+        itemImage.color = Color.white;
+        playerController.itemToUse = itemBehaviour;
+        playerController.audioSource.PlayOneShot(pickUpSFX);
+        itemBoxPooling.SaveObject(gameObject);
+    }
     private void OnTriggerEnter(Collider collision)
     {
         if(collision.CompareTag(Tags.PLAYER))
         {
-            if(collision.GetComponent<PlayerController>().itemToUse != null)
-            {
-                collision.GetComponent<PlayerController>().audioSource.PlayOneShot(notPickUpSFX);
-                childAnimator.SetTrigger("notPickUp");
-                return;
-            }
-            itemImage.sprite = itemBehaviour.sprite;
-            itemImage.color = Color.white;
-            collision.GetComponent<PlayerController>().itemToUse = itemBehaviour;
-            collision.GetComponent<PlayerController>().audioSource.PlayOneShot(pickUpSFX);
-            itemBoxPooling.SaveObject(gameObject);
+            PlayerController playerController = collision.GetComponent<PlayerController>();
+            if (playerController) CollectItemBox(playerController);
+            
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(Tags.PLAYER))
+        {
+            PlayerController playerController = other.GetComponent<PlayerController>();
+            if (playerController != null) playerController.itemBoxOverposition = null;
         }
     }
 }

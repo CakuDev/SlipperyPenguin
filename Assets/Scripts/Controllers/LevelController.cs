@@ -11,6 +11,7 @@ public class LevelController : MonoBehaviour
     public TMP_Text timerText;
     public SpawnManager spawnManager;
     public GameController gameController;
+    public PunctuationController punctuationController;
 
     private Coroutine timerCoroutine;
     [HideInInspector]
@@ -76,7 +77,6 @@ public class LevelController : MonoBehaviour
     {
         StopCoroutine(timerCoroutine);
         gameController.SetGameInfo(currentLevel, score, timer);
-        GameObject.FindWithTag(Tags.MUSIC_CONTROLLER).GetComponent<MusicController>().SetIntroMusic();
-        SceneManager.LoadScene(Scenes.PUNCTUATION_SCENE);
+        punctuationController.LoadPunctuation();
     }
 }

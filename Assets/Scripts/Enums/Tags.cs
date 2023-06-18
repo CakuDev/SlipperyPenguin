@@ -16,4 +16,5 @@ public class Tags
     public static string ITEM_BOX = "Item Box";
     public static string LEADERBOARD_REPOSITORY = "Leaderboard Repository";
     public static string USER_ACCOUNT_CONTROLLER = "User Account Controller";
+    public static string SCENE_ANIMATION_DATA_CONTROLLER = "Scene Animator Data Controller";
 }

@@ -15,14 +15,17 @@ public class PunctuationController : MonoBehaviour
     public GameObject leaderboardRowPrefab;
     public Transform localLeaderboardList;
     public Transform onlineLeaderboardList;
+    public Animator punctuationCanvas;
+    public Animator gameUI;
+    public PauseController pauseController;
     
     private GameController gameController;
     private GameObject currentFirstElement;
     private InputType currentInputType;
-    private string leaderboardKey = "score_leaderboard";
+    private readonly string leaderboardKey = "score_leaderboard";
 
     // Start is called before the first frame update
-    public void Start()
+    public void LoadPunctuation()
     {
         string username = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>().username;
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
@@ -34,7 +37,9 @@ public class PunctuationController : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = GameObject.Find("Play Again Button");
         EventSystem.current.SetSelectedGameObject(currentFirstElement);
-
+        punctuationCanvas.SetTrigger("spawn");
+        gameUI.SetTrigger("hide");
+        pauseController.hasEnded = true;
         ManageLeaderboard(row);
     }
 
@@ -151,7 +156,7 @@ public class PunctuationController : MonoBehaviour
     private void ManageLeaderboard(RowInfo row)
     {
         ManageLocalLeaderboard(row);
-        ManageOnlineLeaderboard(row);
+        if(row.score > 0) ManageOnlineLeaderboard(row);
     }
 
     private void ManageLocalLeaderboard(RowInfo row)

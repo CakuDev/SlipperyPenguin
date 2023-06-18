@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public ItemBehaviour itemToUse;
     private bool isPlatformMobile;
+    [HideInInspector]
+    public ItemBoxBehaviour itemBoxOverposition;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +55,11 @@ public class PlayerController : MonoBehaviour
 
     void CheckUseItem()
     {
-        if(Input.GetButton("Fire1")) UseItem();
+        if (Input.GetButton("Fire1"))
+        {
+            UseItem();
+            if (itemBoxOverposition != null) itemBoxOverposition.CollectItemBox(this);
+        }
     }
 
     public void UseItem()

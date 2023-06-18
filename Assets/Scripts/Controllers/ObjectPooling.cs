@@ -46,8 +46,7 @@ public class ObjectPooling : MonoBehaviour
     public void SaveObject(GameObject objectToSave)
     {
         // Reset object to pool 
-        objectToSave.transform.position = transform.position;
-        objectToSave.transform.rotation = Quaternion.Euler(0, 0, 0);
+        objectToSave.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
         objectToSave.transform.SetParent(transform);
         objectToSave.SetActive(false);
     }

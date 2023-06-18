@@ -10,6 +10,7 @@ public class ItemBoxController : MonoBehaviour
     public SpawnManager.SpawnInterval spawnItemBoxInterval;
     public ObjectPooling itemBoxPooling;
     public List<ItemBehaviour> items;
+    public Transform spawnedItemBoxes;
 
 
     private void Start()
@@ -19,10 +20,10 @@ public class ItemBoxController : MonoBehaviour
 
     void SpawnItemBox()
     {
-        if (GameObject.FindGameObjectsWithTag(Tags.ITEM_BOX).Length >= maxItemBox) return;
+        if (spawnedItemBoxes.childCount >= maxItemBox) return;
         // Get an item box, set its attributes and place it on the map
         GameObject itemBox = itemBoxPooling.GetObject();
-
+        itemBox.transform.SetParent(spawnedItemBoxes);
         itemBox.GetComponent<AudioSource>().Play();
 
         ItemBoxBehaviour itemBoxBehaviour = itemBox.GetComponent<ItemBoxBehaviour>();
@@ -32,8 +33,8 @@ public class ItemBoxController : MonoBehaviour
         while(true)
         {
             Vector3 spawnPointPosition = transform.GetChild(Random.Range(0, transform.childCount)).position;
-            Vector3 playerPosition = GameObject.FindWithTag(Tags.PLAYER).transform.position;
-            if (Vector3.Distance(spawnPointPosition, playerPosition) > 3f)
+            GameObject player = GameObject.FindWithTag(Tags.PLAYER);
+            if(player == null || Vector3.Distance(spawnPointPosition, player.transform.position) > 3f)
             {
                 itemBox.transform.position = spawnPointPosition;
                 break;

@@ -29,7 +29,7 @@ public class GameMenuController : MonoBehaviour
 
     void Update()
     {
-        if (canvasHierarchy.Count > 1 && Input.GetButtonDown("Start"))
+        if (canvasHierarchy.Count > 1 && Input.GetButtonDown("Start") && gameMenuCanvas.isActiveAndEnabled)
         {
             OnClickBack();
         }

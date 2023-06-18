@@ -14,6 +14,8 @@ TagManager:
   - Item Box
   - Leaderboard Repository
   - User Account Controller
+  - FxTemporaire
+  - Scene Animator Data Controller
   layers:
   - Default
   - TransparentFX
