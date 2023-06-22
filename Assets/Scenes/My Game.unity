@@ -8079,7 +8079,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 11
+  near clip plane: 0
   far clip plane: 36
   field of view: 55
   orthographic: 1
