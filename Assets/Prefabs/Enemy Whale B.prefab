@@ -282,7 +282,7 @@ PrefabInstance:
     - target: {fileID: 3338740054337391146, guid: c87fa0d6180121d42a09aff518a98e33, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: b47f216999eab5d45a097ded7bf2a719, type: 2}
+      objectReference: {fileID: 2100000, guid: ee0a707b2b2929f4d8dc190142e275ab, type: 2}
     - target: {fileID: 4882801322305221464, guid: c87fa0d6180121d42a09aff518a98e33, type: 3}
       propertyPath: m_Name
       value: Whale_HighPoly

@@ -275,6 +275,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2125572092869203986}
     m_Modifications:
+    - target: {fileID: 3338740054337391146, guid: c87fa0d6180121d42a09aff518a98e33, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a314acba35a82414f83257d4856400c5, type: 2}
     - target: {fileID: 4882801322305221464, guid: c87fa0d6180121d42a09aff518a98e33, type: 3}
       propertyPath: m_Name
       value: Whale_HighPoly

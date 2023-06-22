@@ -9,14 +9,18 @@ public class UserAccountController : MonoBehaviour
     public GameObject userAccountCanvas;
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
+    public TMP_InputField repeatPasswordInput;
     public TextMeshProUGUI errorText;
     public TextMeshProUGUI usernameText;
     public string serverError = "An internal error ocurred, try again later.";
     public string usernameAlreadyExistsError = "Username already exists.";
     public string passwordTooShortError = "The password must be at least 8 characters.";
+    public string passwordsDontMatchError = "The passwords don't match.";
     public string wrongUsernamePasswordError = "Wrong email and/or password";
 
+    [HideInInspector]
     public string username;
+    [HideInInspector]
     public string memberId;
     private readonly string usernameAlreadyExistsResponse = "user with that email already exists";
     private readonly string wrongUsernamePasswordResponse = "wrong email/password";
@@ -26,16 +30,20 @@ public class UserAccountController : MonoBehaviour
     {
         string email = emailInput.text; 
         string password = passwordInput.text;
+        string repeatPassword = repeatPasswordInput.text;
         if(password.Length < 8)
         {
             errorText.text = passwordTooShortError;
             return;
         }
+        if(!repeatPassword.Equals(password))
+        {
+            errorText.text = passwordsDontMatchError;
+            return;
+        }
         LootLockerSDKManager.WhiteLabelSignUp(email, password, (response) => {
-            Debug.Log("MESSAGE TEXT: " + response.Error);
             if(response.success)
             {
-                Debug.Log("User created successfully");
                 LogIn(true, sceneAnimationController, emailInput, passwordInput);
                 return;
             }
@@ -160,5 +168,6 @@ public class UserAccountController : MonoBehaviour
     {
         emailInput.text = "";
         passwordInput.text = "";
+        repeatPasswordInput.text = "";
     }
 }
