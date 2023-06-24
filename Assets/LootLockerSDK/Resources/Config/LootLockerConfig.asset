@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LootLockerConfig
   m_EditorClassIdentifier: 
   apiKey: dev_0618a894b2734aa5897e6a51c4f5619c
-  token: 
+  token: 1e35573546e6ba2748e078e7cf64fa089c95cebd
   adminToken: 
   refreshToken: 
   domainKey: hilsswbf
@@ -28,5 +28,5 @@ MonoBehaviour:
   userUrl: https://hilsswbf.api.lootlocker.io/game
   baseUrl: https://hilsswbf.api.lootlocker.io
   clientSideRequestTimeOut: 5
-  currentDebugLevel: 3
+  currentDebugLevel: 0
   allowTokenRefresh: 1
