@@ -118,6 +118,18 @@ public class SceneAnimationController : MonoBehaviour
         userAccountController.SignUp(this, emailInput, passwordInput);
     }
 
+    public void LogInAsGuestAndChangeScene()
+    {
+        loadingCanvas.SetActive(true);
+        userAccountController.LogInAsGuest(this);
+    }
+
+    public void SetNameAndChangeScene()
+    {
+        loadingCanvas.SetActive(true);
+        userAccountController.SetNameAndLogIn(this, emailInput);
+    }
+
     public void ShowSettingsMenu()
     {
         settingsCanvas.SetTrigger("spawn");

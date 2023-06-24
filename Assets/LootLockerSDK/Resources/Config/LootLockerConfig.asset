@@ -19,7 +19,7 @@ MonoBehaviour:
   domainKey: hilsswbf
   gameID: 0
   game_version: 1.0.0
-  deviceID: defaultPlayerId
+  deviceID: 
   platform: 4
   developmentMode: 1
   url: https://api.lootlocker.io/v1
@@ -28,5 +28,5 @@ MonoBehaviour:
   userUrl: https://hilsswbf.api.lootlocker.io/game
   baseUrl: https://hilsswbf.api.lootlocker.io
   clientSideRequestTimeOut: 5
-  currentDebugLevel: 0
+  currentDebugLevel: 3
   allowTokenRefresh: 1

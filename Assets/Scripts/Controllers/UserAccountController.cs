@@ -17,10 +17,11 @@ public class UserAccountController : MonoBehaviour
     public string passwordTooShortError = "The password must be at least 8 characters.";
     public string passwordsDontMatchError = "The passwords don't match.";
     public string wrongUsernamePasswordError = "Wrong email and/or password";
+    public string usernameRequiredError = "The username is required";
 
-    [HideInInspector]
+    //[HideInInspector]
     public string username;
-    [HideInInspector]
+    //[HideInInspector]
     public string memberId;
     private readonly string usernameAlreadyExistsResponse = "user with that email already exists";
     private readonly string wrongUsernamePasswordResponse = "wrong email/password";
@@ -34,11 +35,13 @@ public class UserAccountController : MonoBehaviour
         if(password.Length < 8)
         {
             errorText.text = passwordTooShortError;
+            sceneAnimationController.loadingCanvas.SetActive(false);
             return;
         }
         if(!repeatPassword.Equals(password))
         {
             errorText.text = passwordsDontMatchError;
+            sceneAnimationController.loadingCanvas.SetActive(false);
             return;
         }
         LootLockerSDKManager.WhiteLabelSignUp(email, password, (response) => {
@@ -74,7 +77,7 @@ public class UserAccountController : MonoBehaviour
                 if(isFirstLogin)
                 {
                     LootLockerSDKManager.SetPlayerName(email, (response) => {
-                        if (!response.success) Debug.Log("ERROR SETTING THE NAME");
+                        if (!response.success) errorText.text = serverError;
                         else
                         {
                             sceneAnimationController.HideLogInMenu();
@@ -93,14 +96,14 @@ public class UserAccountController : MonoBehaviour
                 return;
             }
             sceneAnimationController.loadingCanvas.SetActive(false);
-            if (!response.LoginResponse.success)
+            if (response.LoginResponse != null && !response.LoginResponse.success)
             {
                 if (response.Error.Contains(wrongUsernamePasswordResponse))
                 {
                     errorText.text = wrongUsernamePasswordError;
                 }
             }
-            if (!response.SessionResponse.success)
+            if (response.SessionResponse != null && !response.SessionResponse.success)
             {
                 Debug.Log("error while starting session");
             }
@@ -162,6 +165,60 @@ public class UserAccountController : MonoBehaviour
                 sceneAnimationController.loadingCanvas.SetActive(false);
             }
         });
+    }
+
+    public void LogInAsGuest(SceneAnimationController sceneAnimationController)
+    {
+        LootLockerSDKManager.StartGuestSession((guestResponse) =>
+        {
+            if (!guestResponse.success)
+            {
+                errorText.text = serverError;
+            } else
+            {
+                memberId = guestResponse.public_uid;
+                if (guestResponse.seen_before)
+                {
+                    LootLockerSDKManager.GetPlayerName(response =>
+                    {
+                        username = response.name;
+                        usernameText.text = username;
+                        sceneAnimationController.ShowMainMenu();
+                        sceneAnimationController.HideTitleCanvas();
+                        sceneAnimationController.HideLogInMenu();
+                        
+                    });
+                } else
+                {
+                    // TODO: Hide menu and show username input and set name button
+                }
+            }
+            sceneAnimationController.loadingCanvas.SetActive(false);
+        });
+    }
+
+    public void SetNameAndLogIn(SceneAnimationController sceneAnimationController, TMP_InputField emailInput)
+    {
+        string email = emailInput.text;
+        if (email.Equals(""))
+        {
+            errorText.text = usernameRequiredError;
+            sceneAnimationController.loadingCanvas.SetActive(false);
+            return;
+        }
+        LootLockerSDKManager.SetPlayerName(email, (nameResponse) =>
+        {
+            if (!nameResponse.success) errorText.text = serverError;
+            else
+            {
+                username = email;
+                usernameText.text = username;
+                sceneAnimationController.HideLogInMenu();
+                sceneAnimationController.ShowMainMenu();
+                ResetInputs();
+            }
+        });
+        sceneAnimationController.loadingCanvas.SetActive(false);
     }
 
     void ResetInputs()
