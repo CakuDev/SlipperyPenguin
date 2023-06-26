@@ -32,9 +32,13 @@ public class LocalLeaderboardRepository : MonoBehaviour
         }
     }
 
-    public List<RowInfo> SaveLeaderboardRow(RowInfo row)
+    public void SaveLeaderboardRow(RowInfo row)
     {
         AddNewRow(row);
+    }
+
+    public List<RowInfo> LoadLeaderboardData()
+    {
         FileStream stream = new(path, FileMode.Open);
         formatter.Serialize(stream, rows);
         stream.Close();

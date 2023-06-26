@@ -12,6 +12,7 @@ public class SceneAnimationController : MonoBehaviour
     public Animator creditsCanvas;
     public Animator tutorialCanvas;
     public Animator logInCanvas;
+    public Animator leaderboardCanvas;
     public TextMeshProUGUI usernameText;
     public TMP_InputField emailInput;
     public TMP_InputField passwordInput;
@@ -158,6 +159,16 @@ public class SceneAnimationController : MonoBehaviour
     public void HideTutorialCanvas()
     {
         tutorialCanvas.SetTrigger("hide");
+    }
+
+    public void ShowLeaderboardCanvas()
+    {
+        leaderboardCanvas.SetTrigger("spawn");
+    }
+
+    public void HideLeaderboardCanvas()
+    {
+        leaderboardCanvas.SetTrigger("hide");
     }
 
     private bool IsControllerInput()

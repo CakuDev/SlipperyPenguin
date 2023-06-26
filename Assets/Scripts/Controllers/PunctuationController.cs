@@ -156,13 +156,30 @@ public class PunctuationController : MonoBehaviour
     private void ManageLeaderboard(RowInfo row)
     {
         ManageLocalLeaderboard(row);
-        if(row.score > 0) ManageOnlineLeaderboard(row);
+        ManageOnlineLeaderboard(row);
     }
 
     private void ManageLocalLeaderboard(RowInfo row)
     {
+        SaveLocalRow(row);
+        LoadLocalLeaderboard(row);
+    }
+
+    private void SaveLocalRow(RowInfo row)
+    {
         LocalLeaderboardRepository repository = GameObject.FindWithTag(Tags.LEADERBOARD_REPOSITORY).GetComponent<LocalLeaderboardRepository>();
-        List<RowInfo> rows = repository.SaveLeaderboardRow(row);
+        repository.SaveLeaderboardRow(row);
+    }
+
+    public void LoadLocalLeaderboard()
+    {
+        LoadLocalLeaderboard(null);
+    }
+
+    private void LoadLocalLeaderboard(RowInfo row)
+    {
+        LocalLeaderboardRepository repository = GameObject.FindWithTag(Tags.LEADERBOARD_REPOSITORY).GetComponent<LocalLeaderboardRepository>();
+        List<RowInfo> rows = repository.LoadLeaderboardData();
         for (int i = 0; i < rows.Count; i++)
         {
             if (i == 50) break;
@@ -175,9 +192,16 @@ public class PunctuationController : MonoBehaviour
 
     private void ManageOnlineLeaderboard(RowInfo row)
     {
+        if (row.score != 0)
+            SaveOnlineLeaderboardData(row);
+        else
+            LoadOnlineLeaderboardData(row);
+    }
+
+    private void SaveOnlineLeaderboardData(RowInfo row)
+    {
         UserAccountController userAccountController = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>();
         string memberId = userAccountController.memberId;
-
         LootLockerSDKManager.SubmitScore(memberId, row.score, leaderboardKey, row.level.ToString() + "," + row.time.ToString(), (response) =>
         {
             if (!response.success)
@@ -185,30 +209,40 @@ public class PunctuationController : MonoBehaviour
                 Debug.Log("Error while submitting the score");
                 return;
             }
-            int count = 50;
-            LootLockerSDKManager.GetScoreList(leaderboardKey, count, 0, (response) =>
+            LoadOnlineLeaderboardData(row);
+        });
+    }
+
+    public void LoadOnlineLeaderboardData()
+    {
+        LoadOnlineLeaderboardData(null);
+    }
+
+    private void LoadOnlineLeaderboardData(RowInfo row)
+    {
+        int count = 50;
+        LootLockerSDKManager.GetScoreList(leaderboardKey, count, 0, (response) =>
+        {
+            if (response.statusCode == 200)
             {
-                if (response.statusCode == 200)
+                for (int i = 0; i < response.items.Length; i++)
                 {
-                    for (int i = 0; i < response.items.Length; i++)
-                    {
-                        if (i == 50) break;
-                        LootLockerLeaderboardMember currentRow = response.items[i];
-                        string name = currentRow.player.name;
-                        string[] levelTime = currentRow.metadata.Split(",");
-                        int level = int.Parse(levelTime[0]);
-                        int time = int.Parse(levelTime[1]);
-                        int score = currentRow.score;
-                        LeaderboardRowBehaviour rowBehaviour = Instantiate(leaderboardRowPrefab, onlineLeaderboardList).GetComponent<LeaderboardRowBehaviour>();
-                        rowBehaviour.OnCreate(i + 1, name, level, score, time);
-                        if (row.name == name) rowBehaviour.HighlightRow();
-                    }
+                    if (i == 50) break;
+                    LootLockerLeaderboardMember currentRow = response.items[i];
+                    string name = currentRow.player.name;
+                    string[] levelTime = currentRow.metadata.Split(",");
+                    int level = int.Parse(levelTime[0]);
+                    int time = int.Parse(levelTime[1]);
+                    int score = currentRow.score;
+                    LeaderboardRowBehaviour rowBehaviour = Instantiate(leaderboardRowPrefab, onlineLeaderboardList).GetComponent<LeaderboardRowBehaviour>();
+                    rowBehaviour.OnCreate(i + 1, name, level, score, time);
+                    if (row?.name == name) rowBehaviour.HighlightRow();
                 }
-                else
-                {
-                    Debug.Log("failed: " + response.Error);
-                }
-            });
+            }
+            else
+            {
+                Debug.Log("failed: " + response.Error);
+            }
         });
     }
 }
