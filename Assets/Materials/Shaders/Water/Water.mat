@@ -102,8 +102,8 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _Water_Height: 1
-    - _WaveScale: 2
+    - _Water_Height: 2.5
+    - _WaveScale: 2.5
     - _WaveSpeed: 0.1
     - _ZWrite: 1
     m_Colors:

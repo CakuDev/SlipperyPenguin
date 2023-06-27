@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cde775906e7ccd74496d05f808770fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  limitHeight: -1
+  limitHeight: -9
   objectPooling: {fileID: 0}
 --- !u!114 &-6185357403862163141
 MonoBehaviour:
