@@ -178,6 +178,7 @@ public class PunctuationController : MonoBehaviour
 
     private void LoadLocalLeaderboard(RowInfo row)
     {
+        if (localLeaderboardList.childCount > 0) return;
         LocalLeaderboardRepository repository = GameObject.FindWithTag(Tags.LEADERBOARD_REPOSITORY).GetComponent<LocalLeaderboardRepository>();
         List<RowInfo> rows = repository.LoadLeaderboardData();
         for (int i = 0; i < rows.Count; i++)
@@ -220,6 +221,7 @@ public class PunctuationController : MonoBehaviour
 
     private void LoadOnlineLeaderboardData(RowInfo row)
     {
+        if (onlineLeaderboardList.childCount > 0) return;
         int count = 50;
         LootLockerSDKManager.GetScoreList(leaderboardKey, count, 0, (response) =>
         {

@@ -74,6 +74,7 @@ public class SceneAnimationController : MonoBehaviour
 
     public void ShowMainMenu()
     {
+        Debug.Log("SHOWING MAIN MENU");
         subtitleCanvas.SetTrigger("spawn");
         iceberg.SetTrigger("spawn");
         gameMenuCanvas.SetTrigger("spawn");
@@ -169,6 +170,7 @@ public class SceneAnimationController : MonoBehaviour
     public void HideLeaderboardCanvas()
     {
         leaderboardCanvas.SetTrigger("hide");
+
     }
 
     private bool IsControllerInput()

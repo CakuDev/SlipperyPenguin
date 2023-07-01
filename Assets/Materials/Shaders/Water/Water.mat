@@ -104,7 +104,7 @@ Material:
     - _UVSec: 0
     - _Water_Height: 2.5
     - _WaveScale: 2.5
-    - _WaveSpeed: 0.1
+    - _WaveSpeed: 0.13
     - _ZWrite: 1
     m_Colors:
     - Color_A271762B: {r: 0, g: 0.04231142, b: 0.1682695, a: 0.9215686}
