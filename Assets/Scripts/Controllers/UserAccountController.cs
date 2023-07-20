@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LootLocker.Requests;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UserAccountController : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class UserAccountController : MonoBehaviour
     public string passwordsDontMatchError = "The passwords don't match.";
     public string wrongUsernamePasswordError = "Wrong email and/or password";
     public string usernameRequiredError = "The username is required";
+    public bool connectedOnline = false;
+    [HideInInspector]
+    public List<GameObject> showOnline;
+    [HideInInspector]
+    public List<GameObject> showOffline;
 
     //[HideInInspector]
     public string username;
@@ -26,7 +32,41 @@ public class UserAccountController : MonoBehaviour
     private readonly string usernameAlreadyExistsResponse = "user with that email already exists";
     private readonly string wrongUsernamePasswordResponse = "wrong email/password";
 
-    // Start is called before the first frame update
+    public void Awake()
+    {
+        ResetShowLists();
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        ResetShowLists();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode)
+    {
+        ManageOnlineGameObjects(connectedOnline);
+        ManageOfflineGameObjects(!connectedOnline);
+    }
+
+    private void ResetShowLists()
+    {
+        showOnline = new();
+        showOffline = new();
+    }
+
+    private void ManageOnlineGameObjects(bool active)
+    {
+        connectedOnline = active;
+        showOnline.ForEach(go => go.SetActive(active));
+    }
+
+    private void ManageOfflineGameObjects(bool active)
+    {
+        showOffline.ForEach(go => go.SetActive(active));
+    }
+
     public void SignUp(SceneAnimationController sceneAnimationController, TMP_InputField emailInput, TMP_InputField passwordInput)
     {
         string email = emailInput.text; 
@@ -72,9 +112,12 @@ public class UserAccountController : MonoBehaviour
             if (response.success)
             {
                 username = email;
-                usernameText.text = username;
                 memberId = response.SessionResponse.public_uid;
-                if(isFirstLogin)
+                ManageOfflineGameObjects(false);
+                ManageOnlineGameObjects(true);
+                if (usernameText == null) usernameText = GameObject.Find("Username Text").GetComponent<TextMeshProUGUI>();
+                usernameText.text = username;
+                if (isFirstLogin)
                 {
                     LootLockerSDKManager.SetPlayerName(email, (response) => {
                         if (!response.success) errorText.text = serverError;
@@ -117,37 +160,30 @@ public class UserAccountController : MonoBehaviour
         {
             if (response)
             {
-                LootLockerSDKManager.StartWhiteLabelSession(response =>
+                LootLockerSDKManager.StartWhiteLabelSession(responseSession =>
                 {
-                    if (response.hasError)
-                    {
-                        sceneAnimationController.ShowLogInMenu();
-                        sceneAnimationController.ShowSubtitle();
-                        sceneAnimationController.HideTitleCanvas();
-                        sceneAnimationController.loadingCanvas.SetActive(false);
-                    }
-                    else
+                    if (!responseSession.hasError)
                     {
                         LootLockerSDKManager.GetPlayerName(response =>
                         {
+                            memberId = responseSession.public_uid;
+                            connectedOnline = true;
+                            ManageOfflineGameObjects(false);
+                            ManageOnlineGameObjects(true);
                             username = response.name;
+                            if (usernameText == null) usernameText = GameObject.Find("Username Text").GetComponent<TextMeshProUGUI>();
                             usernameText.text = username;
-                            sceneAnimationController.ShowMainMenu();
-                            sceneAnimationController.HideTitleCanvas();
-                            sceneAnimationController.loadingCanvas.SetActive(false);
                         });
-                        memberId = response.public_uid;
                     }
                 });
-            }
-            else
+            } else
             {
-                sceneAnimationController.ShowLogInMenu();
-                sceneAnimationController.ShowSubtitle();
-                sceneAnimationController.HideTitleCanvas();
-                sceneAnimationController.loadingCanvas.SetActive(false);
-                loadingCanvas.SetActive(false);
+                ManageOfflineGameObjects(true);
+                ManageOnlineGameObjects(false);
             }
+            sceneAnimationController.ShowMainMenu();
+            sceneAnimationController.HideTitleCanvas();
+            sceneAnimationController.loadingCanvas.SetActive(false);
         });
     }
 
@@ -160,9 +196,9 @@ public class UserAccountController : MonoBehaviour
         {
             if(!response.hasError)
             {
-                sceneAnimationController.ShowLogInMenu();
-                sceneAnimationController.HideMainMenu();
                 sceneAnimationController.loadingCanvas.SetActive(false);
+                ManageOfflineGameObjects(true);
+                ManageOnlineGameObjects(false);
             }
         });
     }
@@ -182,11 +218,13 @@ public class UserAccountController : MonoBehaviour
                     LootLockerSDKManager.GetPlayerName(response =>
                     {
                         username = response.name;
-                        usernameText.text = username;
                         sceneAnimationController.ShowMainMenu();
                         sceneAnimationController.HideTitleCanvas();
                         sceneAnimationController.HideLogInMenu();
-                        
+                        ManageOfflineGameObjects(false);
+                        ManageOnlineGameObjects(true);
+                        if (usernameText == null) usernameText = GameObject.Find("Username Text").GetComponent<TextMeshProUGUI>();
+                        usernameText.text = username;
                     });
                 } else
                 {
@@ -211,7 +249,10 @@ public class UserAccountController : MonoBehaviour
             if (!nameResponse.success) errorText.text = serverError;
             else
             {
+                ManageOfflineGameObjects(false);
+                ManageOnlineGameObjects(true);
                 username = email;
+                if (usernameText == null) usernameText = GameObject.Find("Username Text").GetComponent<TextMeshProUGUI>();
                 usernameText.text = username;
                 sceneAnimationController.HideLogInMenu();
                 sceneAnimationController.ShowMainMenu();

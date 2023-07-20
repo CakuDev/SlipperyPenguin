@@ -93,12 +93,14 @@ public class PunctuationController : MonoBehaviour
         {
             InputType current = currentInputType;
             currentInputType = InputType.KEYBOARD;
+            if (!current.Equals(currentInputType)) Debug.Log(currentInputType);
             return !current.Equals(currentInputType);
         }
         else if (IsControllerInput())
         {
             InputType current = currentInputType;
             currentInputType = InputType.GAMEPAD;
+            if (!current.Equals(currentInputType)) Debug.Log(currentInputType);
             return !current.Equals(currentInputType);
         }
 
@@ -109,7 +111,9 @@ public class PunctuationController : MonoBehaviour
     {
         // mouse movement
         if (Input.GetAxis("Mouse X") != 0.0f ||
-            Input.GetAxis("Mouse Y") != 0.0f)
+            Input.GetAxis("Mouse Y") != 0.0f ||
+            Input.GetAxis("HorizontalUI") == 0.0f ||
+            Input.GetAxis("VerticalUI") == 0.0f)
         {
             return true;
         }
@@ -144,8 +148,8 @@ public class PunctuationController : MonoBehaviour
         }
 
         // joystick axis
-        if (Input.GetAxis("Horizontal") != 0.0f ||
-           Input.GetAxis("Vertical") != 0.0f)
+        if ((Input.GetAxis("Horizontal") != 0.0f && Input.GetAxis("HorizontalUI") == 0.0f) ||
+           (Input.GetAxis("Vertical") != 0.0f && Input.GetAxis("VerticalUI") == 0.0f))
         {
             return true;
         }
