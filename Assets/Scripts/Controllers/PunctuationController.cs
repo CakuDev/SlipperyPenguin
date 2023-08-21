@@ -177,6 +177,8 @@ public class PunctuationController : MonoBehaviour
 
     public void LoadLocalLeaderboard()
     {
+        RectTransform localLeaderboardRect = localLeaderboardList.GetComponent<RectTransform>();
+        localLeaderboardRect.anchoredPosition = new(0, -3000);
         LoadLocalLeaderboard(null);
     }
 
@@ -193,10 +195,17 @@ public class PunctuationController : MonoBehaviour
             rowBehaviour.OnCreate(i + 1, currentRow.name, currentRow.level, currentRow.score, currentRow.time);
             if (currentRow.Equals(row)) rowBehaviour.HighlightRow();
         }
+        RectTransform localLeaderboardRect = localLeaderboardList.GetComponent<RectTransform>();
+        float width = localLeaderboardRect.sizeDelta.x;
+        Vector2 newSize = new(width, leaderboardRowPrefab.GetComponent<RectTransform>().sizeDelta.y * localLeaderboardList.childCount + 10 * localLeaderboardList.childCount);
+        localLeaderboardRect.sizeDelta = newSize;
+        localLeaderboardRect.anchoredPosition = new(0, -3000);
     }
 
     private void ManageOnlineLeaderboard(RowInfo row)
     {
+        UserAccountController userAccountController = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>();
+        if (!userAccountController.connectedOnline) return;
         if (row.score != 0)
             SaveOnlineLeaderboardData(row);
         else
@@ -220,6 +229,8 @@ public class PunctuationController : MonoBehaviour
 
     public void LoadOnlineLeaderboardData()
     {
+        RectTransform onlineLeaderboardRect = onlineLeaderboardList.GetComponent<RectTransform>();
+        onlineLeaderboardRect.anchoredPosition = new(0, -3000);
         LoadOnlineLeaderboardData(null);
     }
 
@@ -244,6 +255,12 @@ public class PunctuationController : MonoBehaviour
                     rowBehaviour.OnCreate(i + 1, name, level, score, time);
                     if (row?.name == name) rowBehaviour.HighlightRow();
                 }
+                RectTransform onlineLeaderboardRect = onlineLeaderboardList.GetComponent<RectTransform>();
+                float width = onlineLeaderboardRect.sizeDelta.x;
+                float height = onlineLeaderboardRect.sizeDelta.y;
+                Vector2 newSize = new(width, leaderboardRowPrefab.GetComponent<RectTransform>().sizeDelta.y * onlineLeaderboardList.childCount + 10 * onlineLeaderboardList.childCount);
+                onlineLeaderboardRect.sizeDelta = newSize;
+                onlineLeaderboardRect.anchoredPosition = new(0, -3000);
             }
             else
             {

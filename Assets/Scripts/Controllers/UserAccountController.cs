@@ -19,6 +19,7 @@ public class UserAccountController : MonoBehaviour
     public string passwordsDontMatchError = "The passwords don't match.";
     public string wrongUsernamePasswordError = "Wrong email and/or password";
     public string usernameRequiredError = "The username is required";
+    public string usernameGuestError = "The username can't start with 'guest'";
     public bool connectedOnline = false;
     [HideInInspector]
     public List<GameObject> showOnline;
@@ -34,6 +35,8 @@ public class UserAccountController : MonoBehaviour
 
     public void Awake()
     {
+        // Line to delete guest account
+        PlayerPrefs.DeleteKey("LootLockerGuestPlayerID");
         ResetShowLists();
         SceneManager.sceneUnloaded += OnSceneUnloaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -72,6 +75,13 @@ public class UserAccountController : MonoBehaviour
         string email = emailInput.text; 
         string password = passwordInput.text;
         string repeatPassword = repeatPasswordInput.text;
+        if(email.Substring(0,6).Contains("guest"))
+        {
+            errorText.text = usernameGuestError;
+            sceneAnimationController.loadingCanvas.SetActive(false);
+            return;
+        }
+
         if(password.Length < 8)
         {
             errorText.text = passwordTooShortError;
@@ -213,25 +223,24 @@ public class UserAccountController : MonoBehaviour
             } else
             {
                 memberId = guestResponse.public_uid;
-                if (guestResponse.seen_before)
+                string email = "guest" + Random.Range(1000, 9999);
+                LootLockerSDKManager.SetPlayerName(email, (nameResponse) =>
                 {
-                    LootLockerSDKManager.GetPlayerName(response =>
+                    if (!nameResponse.success) errorText.text = serverError;
+                    else
                     {
-                        username = response.name;
-                        sceneAnimationController.ShowMainMenu();
-                        sceneAnimationController.HideTitleCanvas();
-                        sceneAnimationController.HideLogInMenu();
                         ManageOfflineGameObjects(false);
                         ManageOnlineGameObjects(true);
+                        username = email;
                         if (usernameText == null) usernameText = GameObject.Find("Username Text").GetComponent<TextMeshProUGUI>();
                         usernameText.text = username;
-                    });
-                } else
-                {
-                    // TODO: Hide menu and show username input and set name button
-                }
+                        sceneAnimationController.HideLogInMenu();
+                        sceneAnimationController.ShowMainMenu();
+                        ResetInputs();
+                    }
+                });
+                sceneAnimationController.loadingCanvas.SetActive(false);
             }
-            sceneAnimationController.loadingCanvas.SetActive(false);
         });
     }
 

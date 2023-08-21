@@ -22,6 +22,7 @@ public class SceneAnimationController : MonoBehaviour
 
     private SceneAnimationDataController sceneAnimationDataController;
     private bool alreadySkipped = false;
+
     private void Awake()
     {
         sceneAnimationDataController = GameObject.FindWithTag(Tags.SCENE_ANIMATION_DATA_CONTROLLER).GetComponent<SceneAnimationDataController>();
@@ -57,6 +58,11 @@ public class SceneAnimationController : MonoBehaviour
         alreadySkipped = true;
     }
 
+    public void ShowGuestInMenu()
+    {
+        logInCanvas.SetTrigger("showGuest");
+    }
+
     public void ShowSignUpInputs()
     {
         logInCanvas.SetTrigger("showSignUp");
@@ -74,7 +80,6 @@ public class SceneAnimationController : MonoBehaviour
 
     public void ShowMainMenu()
     {
-        Debug.Log("SHOWING MAIN MENU");
         subtitleCanvas.SetTrigger("spawn");
         iceberg.SetTrigger("spawn");
         gameMenuCanvas.SetTrigger("spawn");
