@@ -19,6 +19,7 @@ public class SceneAnimationController : MonoBehaviour
     public Animator iceberg;
     public UserAccountController userAccountController;
     public GameObject loadingCanvas;
+    [field: SerializeField] public GameObject EventSystem { get; private set; }
 
     private SceneAnimationDataController sceneAnimationDataController;
     private bool alreadySkipped = false;
@@ -28,6 +29,7 @@ public class SceneAnimationController : MonoBehaviour
         sceneAnimationDataController = GameObject.FindWithTag(Tags.SCENE_ANIMATION_DATA_CONTROLLER).GetComponent<SceneAnimationDataController>();
         if (!sceneAnimationDataController.isFirstTimeInMenu)
         {
+            EventSystem.SetActive(false);
             ShowMainMenu();
             HideTitleCanvas();
             userAccountController = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>();
@@ -46,6 +48,7 @@ public class SceneAnimationController : MonoBehaviour
 
     void CheckExistingSessionAndChangeCanvas()
     {
+        EventSystem.SetActive(false);
         loadingCanvas.SetActive(true);
         userAccountController.CheckExistingSession(this, loadingCanvas);
         sceneAnimationDataController.isFirstTimeInMenu = false;
@@ -54,32 +57,38 @@ public class SceneAnimationController : MonoBehaviour
 
     public void ShowLogInMenu()
     {
+        EventSystem.SetActive(false);
         logInCanvas.SetTrigger("spawn");
         alreadySkipped = true;
     }
 
     public void ShowGuestInMenu()
     {
+        EventSystem.SetActive(false);
         logInCanvas.SetTrigger("showGuest");
     }
 
     public void ShowSignUpInputs()
     {
+        EventSystem.SetActive(false);
         logInCanvas.SetTrigger("showSignUp");
     }
 
     public void ShowLogInInputs()
     {
+        EventSystem.SetActive(false);
         logInCanvas.SetTrigger("showLogIn");
     }
 
     public void HideTitleCanvas()
     {
+        EventSystem.SetActive(false);
         titleCanvas.SetTrigger("close");
     }
 
     public void ShowMainMenu()
     {
+        EventSystem.SetActive(false);
         subtitleCanvas.SetTrigger("spawn");
         iceberg.SetTrigger("spawn");
         gameMenuCanvas.SetTrigger("spawn");
@@ -88,92 +97,109 @@ public class SceneAnimationController : MonoBehaviour
 
     public void HideMainMenu()
     {
+        EventSystem.SetActive(false);
         iceberg.SetTrigger("hide");
         gameMenuCanvas.SetTrigger("hide");
     }
 
     public void ShowSubtitle()
     {
+        EventSystem.SetActive(false);
         subtitleCanvas.SetTrigger("spawn");
     }
 
     public void HideSubtitle()
     {
+        EventSystem.SetActive(false);
         subtitleCanvas.SetTrigger("hide");
     }
 
     public void HideLogInMenu()
     {
+        EventSystem.SetActive(false);
         logInCanvas.SetTrigger("hide");
     }
 
     public void LogOutAndChangeScene()
     {
+        EventSystem.SetActive(false);
         loadingCanvas.SetActive(true);
         userAccountController.LogOut(this);
     }
 
     public void LogInAndChangeScene()
     {
+        EventSystem.SetActive(false);
         loadingCanvas.SetActive(true);
         userAccountController.LogIn(false, this, emailInput, passwordInput);
     }
 
     public void SignUpAndChangeScene()
     {
+        EventSystem.SetActive(false);
         loadingCanvas.SetActive(true);
         userAccountController.SignUp(this, emailInput, passwordInput);
     }
 
     public void LogInAsGuestAndChangeScene()
     {
+        EventSystem.SetActive(false);
         loadingCanvas.SetActive(true);
         userAccountController.LogInAsGuest(this);
     }
 
     public void SetNameAndChangeScene()
     {
+        EventSystem.SetActive(false);
         loadingCanvas.SetActive(true);
         userAccountController.SetNameAndLogIn(this, emailInput);
     }
 
     public void ShowSettingsMenu()
     {
+        EventSystem.SetActive(false);
         settingsCanvas.SetTrigger("spawn");
     }
 
     public void HideSettingsMenu()
     {
+        EventSystem.SetActive(false);
         settingsCanvas.SetTrigger("hide");
     }
 
     public void ShowCreditsCanvas()
     {
+        EventSystem.SetActive(false);
         creditsCanvas.SetTrigger("spawn");
     }
 
     public void HideCreditsCanvas()
     {
+        EventSystem.SetActive(false);
         creditsCanvas.SetTrigger("hide");
     }
 
     public void ShowTutorialCanvas()
     {
+        EventSystem.SetActive(false);
         tutorialCanvas.SetTrigger("spawn");
     }
 
     public void HideTutorialCanvas()
     {
+        EventSystem.SetActive(false);
         tutorialCanvas.SetTrigger("hide");
     }
 
     public void ShowLeaderboardCanvas()
     {
+        EventSystem.SetActive(false);
         leaderboardCanvas.SetTrigger("spawn");
     }
 
     public void HideLeaderboardCanvas()
     {
+        EventSystem.SetActive(false);
         leaderboardCanvas.SetTrigger("hide");
 
     }

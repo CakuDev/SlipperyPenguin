@@ -46,6 +46,7 @@ public class GifBehaviour : MonoBehaviour
 
     public void Play()
     {
+        timer = 0;
         isStopped = false;
     }
 }

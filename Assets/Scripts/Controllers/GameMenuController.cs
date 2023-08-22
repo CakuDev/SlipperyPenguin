@@ -13,17 +13,17 @@ public class GameMenuController : MonoBehaviour
     private Stack<GameObject> pressedButtonHierarchy;
     private Stack<Canvas> canvasHierarchy;
     private GameObject currentFirstElement;
-    private InputType currentInputType;
+    public InputType currentInputType { get; private set; }
 
     void Start()
     {
         pressedButtonHierarchy = new();
         canvasHierarchy = new();
 
-        EventSystem.current.SetSelectedGameObject(null);
+        //EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = FindFirstUIElementChild(gameMenuCanvas.transform);
         currentInputType = InputType.GAMEPAD;
-        EventSystem.current.SetSelectedGameObject(currentFirstElement);
+        //EventSystem.current.SetSelectedGameObject(currentFirstElement);
         canvasHierarchy.Push(gameMenuCanvas);
     }
 
@@ -95,27 +95,26 @@ public class GameMenuController : MonoBehaviour
         {
             if(currentInputType.Equals(InputType.KEYBOARD))
             {
-                EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(null);
             } else
             {
-                EventSystem.current.SetSelectedGameObject(currentFirstElement);
+                //EventSystem.current.SetSelectedGameObject(currentFirstElement);
             }
         }
     }
 
     private bool HasInputTypeChanged()
     {
+        Debug.Log($"Horizontal: {Input.GetAxis("Horizontal")}, UI: {Input.GetAxis("HorizontalUI")}");
         if (IsMouseKeyboard())
         {
             InputType current = currentInputType;
             currentInputType = InputType.KEYBOARD;
-            if(!current.Equals(currentInputType)) Debug.Log(currentInputType);
             return !current.Equals(currentInputType);
         } else if (IsControllerInput())
         {
             InputType current = currentInputType;
             currentInputType = InputType.GAMEPAD;
-            if (!current.Equals(currentInputType)) Debug.Log(currentInputType);
             return !current.Equals(currentInputType);
         }
 
@@ -125,14 +124,8 @@ public class GameMenuController : MonoBehaviour
     private bool IsMouseKeyboard()
     {
         // mouse movement
-        if (Input.GetAxis("Mouse X") != 0.0f ||
-            Input.GetAxis("Mouse Y") != 0.0f ||
-            Input.GetAxis("HorizontalUI") == 0.0f ||
-            Input.GetAxis("VerticalUI") == 0.0f)
-        {
-            return true;
-        }
-        return false;
+        return Input.GetAxis("Mouse X") != 0.0f ||
+            Input.GetAxis("Mouse Y") != 0.0f;
     }
 
     private bool IsControllerInput()
@@ -163,8 +156,8 @@ public class GameMenuController : MonoBehaviour
         }
 
         // joystick axis
-        if ((Input.GetAxis("Horizontal") != 0.0f && Input.GetAxis("HorizontalUI") == 0.0f) ||
-           (Input.GetAxis("Vertical") != 0.0f && Input.GetAxis("VerticalUI") == 0.0f))
+        if ((Input.GetAxis("HorizontalUI") > 0.3f || Input.GetAxis("HorizontalUI") < -0.3f) ||
+           (Input.GetAxis("VerticalUI") > 0.3f || Input.GetAxis("VerticalUI") < -0.3f))
         {
             return true;
         }

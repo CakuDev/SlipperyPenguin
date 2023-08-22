@@ -17,23 +17,37 @@ public class PunctuationController : MonoBehaviour
     public Transform onlineLeaderboardList;
     public Animator punctuationCanvas;
     public Animator gameUI;
+    public Animator setNameCanvas;
     public PauseController pauseController;
-    
+    public TMP_InputField usernameText;
+    public TextMeshProUGUI errorText;
+    public string serverError = "An internal error ocurred, try again later.";
+
+
     private GameController gameController;
     private GameObject currentFirstElement;
     private InputType currentInputType;
     private readonly string leaderboardKey = "score_leaderboard";
+    private bool nameAlreadySet = false;
 
     // Start is called before the first frame update
     public void LoadPunctuation()
     {
-        string username = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>().username;
+        UserAccountController userAccountController = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>();
+        string username = userAccountController.username;
+        if(setNameCanvas != null && (username == "" || (!userAccountController.connectedOnline && !nameAlreadySet)))
+        {
+            usernameText.text = username;
+            setNameCanvas.SetTrigger("spawn");
+            return;
+        }
+        nameAlreadySet = false;
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         RowInfo row = new(username, gameController.currentLevel, gameController.score, gameController.timer);
         scoreText.text = "Score: " + gameController.score.ToString();
         levelText.text = "Level: " + gameController.currentLevel.ToString();
         timerText.text = "Time: " + gameController.GetTimerFormat();
-        DontDestroyBehaviour.DestroyObject(gameController.gameObject);
+        Destroy(gameController.gameObject);
         EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = GameObject.Find("Play Again Button");
         EventSystem.current.SetSelectedGameObject(currentFirstElement);
@@ -78,29 +92,28 @@ public class PunctuationController : MonoBehaviour
         {
             if (currentInputType.Equals(InputType.KEYBOARD))
             {
-                EventSystem.current.SetSelectedGameObject(null);
+                //EventSystem.current.SetSelectedGameObject(null);
             }
             else
             {
-                EventSystem.current.SetSelectedGameObject(currentFirstElement);
+                //EventSystem.current.SetSelectedGameObject(currentFirstElement);
             }
         }
     }
 
     private bool HasInputTypeChanged()
     {
+        Debug.Log($"Horizontal: {Input.GetAxis("Horizontal")}, UI: {Input.GetAxis("HorizontalUI")}");
         if (IsMouseKeyboard())
         {
             InputType current = currentInputType;
             currentInputType = InputType.KEYBOARD;
-            if (!current.Equals(currentInputType)) Debug.Log(currentInputType);
             return !current.Equals(currentInputType);
         }
         else if (IsControllerInput())
         {
             InputType current = currentInputType;
             currentInputType = InputType.GAMEPAD;
-            if (!current.Equals(currentInputType)) Debug.Log(currentInputType);
             return !current.Equals(currentInputType);
         }
 
@@ -110,14 +123,8 @@ public class PunctuationController : MonoBehaviour
     private bool IsMouseKeyboard()
     {
         // mouse movement
-        if (Input.GetAxis("Mouse X") != 0.0f ||
-            Input.GetAxis("Mouse Y") != 0.0f ||
-            Input.GetAxis("HorizontalUI") == 0.0f ||
-            Input.GetAxis("VerticalUI") == 0.0f)
-        {
-            return true;
-        }
-        return false;
+        return Input.GetAxis("Mouse X") != 0.0f ||
+            Input.GetAxis("Mouse Y") != 0.0f;
     }
 
     private bool IsControllerInput()
@@ -148,8 +155,8 @@ public class PunctuationController : MonoBehaviour
         }
 
         // joystick axis
-        if ((Input.GetAxis("Horizontal") != 0.0f && Input.GetAxis("HorizontalUI") == 0.0f) ||
-           (Input.GetAxis("Vertical") != 0.0f && Input.GetAxis("VerticalUI") == 0.0f))
+        if ((Input.GetAxis("HorizontalUI") > 0.3f || Input.GetAxis("HorizontalUI") < -0.3f) ||
+           (Input.GetAxis("VerticalUI") > 0.3f || Input.GetAxis("VerticalUI") < -0.3f))
         {
             return true;
         }
@@ -220,7 +227,7 @@ public class PunctuationController : MonoBehaviour
         {
             if (!response.success)
             {
-                Debug.Log("Error while submitting the score");
+                errorText.text = serverError;
                 return;
             }
             LoadOnlineLeaderboardData(row);
@@ -236,6 +243,9 @@ public class PunctuationController : MonoBehaviour
 
     private void LoadOnlineLeaderboardData(RowInfo row)
     {
+        errorText.text = "";
+        UserAccountController userAccountController = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>();
+        if (!userAccountController.connectedOnline) return;
         if (onlineLeaderboardList.childCount > 0) return;
         int count = 50;
         LootLockerSDKManager.GetScoreList(leaderboardKey, count, 0, (response) =>
@@ -264,8 +274,19 @@ public class PunctuationController : MonoBehaviour
             }
             else
             {
-                Debug.Log("failed: " + response.Error);
+                errorText.text = serverError;
             }
         });
+    }
+
+    public void HideSetNameCanvas()
+    {
+        setNameCanvas.SetTrigger("hide");
+    }
+
+    public void SetUsername()
+    {
+        nameAlreadySet = true;
+        GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>().username = usernameText.text;
     }
 }

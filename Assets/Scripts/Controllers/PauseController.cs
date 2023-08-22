@@ -30,7 +30,7 @@ public class PauseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckInputType();
+        //CheckInputType();
         if (hasEnded) return;
         if (!isPaused && Input.GetButtonDown("Start"))
         {
@@ -125,84 +125,84 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void CheckInputType()
-    {
-        if (HasInputTypeChanged())
-        {
-            if (currentInputType.Equals(InputType.KEYBOARD))
-            {
-                EventSystem.current.SetSelectedGameObject(null);
-            }
-            else
-            {
-                EventSystem.current.SetSelectedGameObject(currentFirstElement);
-            }
-        }
-    }
+    //public void CheckInputType()
+    //{
+    //    if (HasInputTypeChanged())
+    //    {
+    //        if (currentInputType.Equals(InputType.KEYBOARD))
+    //        {
+    //            EventSystem.current.SetSelectedGameObject(null);
+    //        }
+    //        else
+    //        {
+    //            EventSystem.current.SetSelectedGameObject(currentFirstElement);
+    //        }
+    //    }
+    //}
 
-    private bool HasInputTypeChanged()
-    {
-        if (IsMouseKeyboard())
-        {
-            InputType current = currentInputType;
-            currentInputType = InputType.KEYBOARD;
-            return !current.Equals(currentInputType);
-        }
-        else if (IsControllerInput())
-        {
-            InputType current = currentInputType;
-            currentInputType = InputType.GAMEPAD;
-            return !current.Equals(currentInputType);
-        }
+    //private bool HasInputTypeChanged()
+    //{
+    //    if (IsMouseKeyboard())
+    //    {
+    //        InputType current = currentInputType;
+    //        currentInputType = InputType.KEYBOARD;
+    //        return !current.Equals(currentInputType);
+    //    }
+    //    else if (IsControllerInput())
+    //    {
+    //        InputType current = currentInputType;
+    //        currentInputType = InputType.GAMEPAD;
+    //        return !current.Equals(currentInputType);
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
-    private bool IsMouseKeyboard()
-    {
-        // mouse movement
-        if (Input.GetAxis("Mouse X") != 0.0f ||
-            Input.GetAxis("Mouse Y") != 0.0f)
-        {
-            return true;
-        }
-        return false;
-    }
+    //private bool IsMouseKeyboard()
+    //{
+    //    // mouse movement
+    //    if (Input.GetAxis("Mouse X") != 0.0f ||
+    //        Input.GetAxis("Mouse Y") != 0.0f)
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
-    private bool IsControllerInput()
-    {
-        // joystick buttons
-        if (Input.GetKey(KeyCode.Joystick1Button0) ||
-           Input.GetKey(KeyCode.Joystick1Button1) ||
-           Input.GetKey(KeyCode.Joystick1Button2) ||
-           Input.GetKey(KeyCode.Joystick1Button3) ||
-           Input.GetKey(KeyCode.Joystick1Button4) ||
-           Input.GetKey(KeyCode.Joystick1Button5) ||
-           Input.GetKey(KeyCode.Joystick1Button6) ||
-           Input.GetKey(KeyCode.Joystick1Button7) ||
-           Input.GetKey(KeyCode.Joystick1Button8) ||
-           Input.GetKey(KeyCode.Joystick1Button9) ||
-           Input.GetKey(KeyCode.Joystick1Button10) ||
-           Input.GetKey(KeyCode.Joystick1Button11) ||
-           Input.GetKey(KeyCode.Joystick1Button12) ||
-           Input.GetKey(KeyCode.Joystick1Button13) ||
-           Input.GetKey(KeyCode.Joystick1Button14) ||
-           Input.GetKey(KeyCode.Joystick1Button15) ||
-           Input.GetKey(KeyCode.Joystick1Button16) ||
-           Input.GetKey(KeyCode.Joystick1Button17) ||
-           Input.GetKey(KeyCode.Joystick1Button18) ||
-           Input.GetKey(KeyCode.Joystick1Button19))
-        {
-            return true;
-        }
+    //private bool IsControllerInput()
+    //{
+    //    // joystick buttons
+    //    if (Input.GetKey(KeyCode.Joystick1Button0) ||
+    //       Input.GetKey(KeyCode.Joystick1Button1) ||
+    //       Input.GetKey(KeyCode.Joystick1Button2) ||
+    //       Input.GetKey(KeyCode.Joystick1Button3) ||
+    //       Input.GetKey(KeyCode.Joystick1Button4) ||
+    //       Input.GetKey(KeyCode.Joystick1Button5) ||
+    //       Input.GetKey(KeyCode.Joystick1Button6) ||
+    //       Input.GetKey(KeyCode.Joystick1Button7) ||
+    //       Input.GetKey(KeyCode.Joystick1Button8) ||
+    //       Input.GetKey(KeyCode.Joystick1Button9) ||
+    //       Input.GetKey(KeyCode.Joystick1Button10) ||
+    //       Input.GetKey(KeyCode.Joystick1Button11) ||
+    //       Input.GetKey(KeyCode.Joystick1Button12) ||
+    //       Input.GetKey(KeyCode.Joystick1Button13) ||
+    //       Input.GetKey(KeyCode.Joystick1Button14) ||
+    //       Input.GetKey(KeyCode.Joystick1Button15) ||
+    //       Input.GetKey(KeyCode.Joystick1Button16) ||
+    //       Input.GetKey(KeyCode.Joystick1Button17) ||
+    //       Input.GetKey(KeyCode.Joystick1Button18) ||
+    //       Input.GetKey(KeyCode.Joystick1Button19))
+    //    {
+    //        return true;
+    //    }
 
-        // joystick axis
-        if (Input.GetAxis("Horizontal") != 0.0f ||
-           Input.GetAxis("Vertical") != 0.0f)
-        {
-            return true;
-        }
+    //    // joystick axis
+    //    if (Input.GetAxis("Horizontal") != 0.0f ||
+    //       Input.GetAxis("Vertical") != 0.0f)
+    //    {
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 }
