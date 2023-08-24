@@ -30,6 +30,7 @@ public class ItemBoxBehaviour : MonoBehaviour
         playerController.itemToUse = itemBehaviour;
         playerController.audioSource.PlayOneShot(pickUpSFX);
         itemBoxPooling.SaveObject(gameObject);
+        playerController.itemBoxOverposition = null;
     }
     private void OnTriggerEnter(Collider collision)
     {

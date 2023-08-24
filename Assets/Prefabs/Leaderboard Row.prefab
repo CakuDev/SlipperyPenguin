@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -88.3, y: 0}
+  m_AnchoredPosition: {x: 12.3, y: 0}
   m_SizeDelta: {x: 191.6035, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1363185692896747475
@@ -170,7 +170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 119.6499, y: 0}
+  m_AnchoredPosition: {x: 220.24988, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5059668879113942311
@@ -306,7 +306,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -543, y: 0}
+  m_AnchoredPosition: {x: -633.5, y: 0}
   m_SizeDelta: {x: 96, y: 84}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4101064937655218416
@@ -458,7 +458,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 543, y: 0}
+  m_AnchoredPosition: {x: 643.6, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &3837552371752470214
@@ -598,8 +598,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -649.60986, y: -291.1369}
-  m_SizeDelta: {x: 52.8046, y: 101.415}
+  m_AnchoredPosition: {x: -568.4911, y: -291.1369}
+  m_SizeDelta: {x: 215.0421, y: 101.415}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4193197892202911683
 MonoBehaviour:
@@ -794,8 +794,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -270.62396, y: 0}
-  m_SizeDelta: {x: 289.5477, y: 50}
+  m_AnchoredPosition: {x: -261.1384, y: 0}
+  m_SizeDelta: {x: 531.411, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &490923864380632155
 CanvasRenderer:
@@ -825,7 +825,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: WWWWWWWW
+  m_text: wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 68775832d3fd08d49afc0bb3d61362e3, type: 2}
   m_sharedMaterial: {fileID: -3522985490441190175, guid: 68775832d3fd08d49afc0bb3d61362e3, type: 2}

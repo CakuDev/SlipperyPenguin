@@ -3651,6 +3651,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1488446054}
     m_Modifications:
+    - target: {fileID: 8170153791668043265, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
+      propertyPath: deadZone
+      value: 0.19
+      objectReference: {fileID: 0}
     - target: {fileID: 8170153791668043268, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4747,7 +4751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7323256221662807243, guid: 34fa86d44cca7bc439091697513630e8, type: 3}
       propertyPath: m_text
-      value: You must log in to watch the online leaderboard
+      value: You must log in to see the online leaderboard
       objectReference: {fileID: 0}
     - target: {fileID: 7323256221662807243, guid: 34fa86d44cca7bc439091697513630e8, type: 3}
       propertyPath: m_margin.w
@@ -7418,6 +7422,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -3522985490441190175, guid: 68775832d3fd08d49afc0bb3d61362e3, type: 2}
+    - target: {fileID: 4478571940030765572, guid: 166ff621222d59d41ac75b9f755955f3, type: 3}
+      propertyPath: m_CharacterLimit
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 4478571940030765572, guid: 166ff621222d59d41ac75b9f755955f3, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 

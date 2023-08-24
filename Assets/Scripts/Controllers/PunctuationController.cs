@@ -103,7 +103,6 @@ public class PunctuationController : MonoBehaviour
 
     private bool HasInputTypeChanged()
     {
-        Debug.Log($"Horizontal: {Input.GetAxis("Horizontal")}, UI: {Input.GetAxis("HorizontalUI")}");
         if (IsMouseKeyboard())
         {
             InputType current = currentInputType;

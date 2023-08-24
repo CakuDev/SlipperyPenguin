@@ -23,6 +23,7 @@ public class SceneAnimationController : MonoBehaviour
 
     private SceneAnimationDataController sceneAnimationDataController;
     private bool alreadySkipped = false;
+    private bool titleDelay = false;
 
     private void Awake()
     {
@@ -34,16 +35,24 @@ public class SceneAnimationController : MonoBehaviour
             HideTitleCanvas();
             userAccountController = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>();
             usernameText.text = userAccountController.username;
+        } else
+        {
+            Invoke(nameof(TitleDelay), 0.5f);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!alreadySkipped && (Input.anyKeyDown || IsControllerInput()))
+        if (titleDelay && !alreadySkipped && (Input.anyKeyDown || ControllerButtons()))
         {
             CheckExistingSessionAndChangeCanvas();
         }
+    }
+
+    void TitleDelay()
+    {
+        titleDelay = true;
     }
 
     void CheckExistingSessionAndChangeCanvas()
@@ -239,5 +248,29 @@ public class SceneAnimationController : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool ControllerButtons()
+    {
+        return (Input.GetKey(KeyCode.Joystick1Button0) ||
+           Input.GetKey(KeyCode.Joystick1Button1) ||
+           Input.GetKey(KeyCode.Joystick1Button2) ||
+           Input.GetKey(KeyCode.Joystick1Button3) ||
+           Input.GetKey(KeyCode.Joystick1Button4) ||
+           Input.GetKey(KeyCode.Joystick1Button5) ||
+           Input.GetKey(KeyCode.Joystick1Button6) ||
+           Input.GetKey(KeyCode.Joystick1Button7) ||
+           Input.GetKey(KeyCode.Joystick1Button8) ||
+           Input.GetKey(KeyCode.Joystick1Button9) ||
+           Input.GetKey(KeyCode.Joystick1Button10) ||
+           Input.GetKey(KeyCode.Joystick1Button11) ||
+           Input.GetKey(KeyCode.Joystick1Button12) ||
+           Input.GetKey(KeyCode.Joystick1Button13) ||
+           Input.GetKey(KeyCode.Joystick1Button14) ||
+           Input.GetKey(KeyCode.Joystick1Button15) ||
+           Input.GetKey(KeyCode.Joystick1Button16) ||
+           Input.GetKey(KeyCode.Joystick1Button17) ||
+           Input.GetKey(KeyCode.Joystick1Button18) ||
+           Input.GetKey(KeyCode.Joystick1Button19));
     }
 }

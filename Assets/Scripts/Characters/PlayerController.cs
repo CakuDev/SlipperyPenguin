@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
     void CheckUseItem()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             UseItem();
             if (itemBoxOverposition != null) itemBoxOverposition.CollectItemBox(this);

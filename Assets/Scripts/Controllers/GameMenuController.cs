@@ -56,9 +56,9 @@ public class GameMenuController : MonoBehaviour
         Canvas previousCanvas = canvasHierarchy.Peek();
         currentCanvas.gameObject.SetActive(false);
         previousCanvas.gameObject.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null);
+        // EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = FindFirstUIElementChild(gameMenuCanvas.transform);
-        if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(pressedButtonHierarchy.Pop());
+        // if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(pressedButtonHierarchy.Pop());
     }
 
     public void StartGame()
@@ -72,9 +72,9 @@ public class GameMenuController : MonoBehaviour
         pressedButtonHierarchy.Push(pressedButton);
         settingsCanvas.gameObject.SetActive(true);
         canvasHierarchy.Push(settingsCanvas);
-        EventSystem.current.SetSelectedGameObject(null);
+        //EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = FindFirstUIElementChild(settingsCanvas.transform);
-        if(currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(currentFirstElement);
+        //if(currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(currentFirstElement);
     }
 
     public void Exit()
@@ -105,7 +105,6 @@ public class GameMenuController : MonoBehaviour
 
     private bool HasInputTypeChanged()
     {
-        Debug.Log($"Horizontal: {Input.GetAxis("Horizontal")}, UI: {Input.GetAxis("HorizontalUI")}");
         if (IsMouseKeyboard())
         {
             InputType current = currentInputType;

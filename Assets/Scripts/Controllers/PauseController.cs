@@ -54,9 +54,9 @@ public class PauseController : MonoBehaviour
         isPaused = true;
         mainMenuCanvas.gameObject.SetActive(true);
         canvasHierarchy.Push(mainMenuCanvas);
-        EventSystem.current.SetSelectedGameObject(null);
+        // EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = FindFirstUIElementChild(mainMenuCanvas.transform);
-        if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(FindFirstUIElementChild(mainMenuCanvas.transform));
+        // if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(FindFirstUIElementChild(mainMenuCanvas.transform));
     }
 
     public void OnClickContinue()
@@ -74,9 +74,9 @@ public class PauseController : MonoBehaviour
         Canvas previousCanvas = canvasHierarchy.Peek();
         currentCanvas.gameObject.SetActive(false);
         previousCanvas.gameObject.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null);
+        // EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = FindFirstUIElementChild(mainMenuCanvas.transform);
-        if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(pressedButtonHierarchy.Pop());
+        // if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(pressedButtonHierarchy.Pop());
     }
 
     public void EnterSettingsMenu(GameObject pressedButton)
@@ -85,9 +85,9 @@ public class PauseController : MonoBehaviour
         mainMenuCanvas.gameObject.SetActive(false);
         settingsCanvas.gameObject.SetActive(true);
         canvasHierarchy.Push(settingsCanvas);
-        EventSystem.current.SetSelectedGameObject(null);
+        // EventSystem.current.SetSelectedGameObject(null);
         currentFirstElement = FindFirstUIElementChild(settingsCanvas.transform);
-        if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(currentFirstElement);
+        // if (currentInputType.Equals(InputType.GAMEPAD)) EventSystem.current.SetSelectedGameObject(currentFirstElement);
     }
 
     public void ExitSettingsMenu()
