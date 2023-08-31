@@ -32,7 +32,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        CheckUseItem();
+        if (Input.GetButtonDown("Fire1"))
+        {
+            CheckUseItem();
+        }
     }
 
     // Update is called once per frame
@@ -53,16 +56,13 @@ public class PlayerController : MonoBehaviour
         direction = new(horizontalInput, 0, verticalInput);
     }
 
-    void CheckUseItem()
+    public void CheckUseItem()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            UseItem();
-            if (itemBoxOverposition != null) itemBoxOverposition.CollectItemBox(this);
-        }
+        UseItem();
+        if (itemBoxOverposition != null) itemBoxOverposition.CollectItemBox(this);
     }
 
-    public void UseItem()
+    void UseItem()
     {
         if(itemToUse != null)
         {

@@ -104,6 +104,14 @@ public class SceneAnimationController : MonoBehaviour
         alreadySkipped = true;
     }
 
+    public void ShowMainMenuWithoutSubtitle()
+    {
+        EventSystem.SetActive(false);
+        iceberg.SetTrigger("spawn");
+        gameMenuCanvas.SetTrigger("spawn");
+        alreadySkipped = true;
+    }
+
     public void HideMainMenu()
     {
         EventSystem.SetActive(false);

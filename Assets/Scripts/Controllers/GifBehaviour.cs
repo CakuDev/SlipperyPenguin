@@ -21,13 +21,6 @@ public class GifBehaviour : MonoBehaviour
         image = GetComponent<Image>();
         timer = 0;
         isStopped = !playOnAwake;
-        string[] assetPaths = Directory.GetFiles("Assets/Resources/" + folder.name, "*.gif");
-        frames = new Sprite[assetPaths.Length];
-        for (int i = 0; i < assetPaths.Length; i++)
-        {
-            string[] path = assetPaths[i].Split(folder.name);
-            frames[i] = Resources.Load<Sprite>(folder.name + path[1][0..^4]);
-        }
     }
 
     void FixedUpdate()

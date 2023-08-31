@@ -146,10 +146,18 @@ public class UserAccountController : MonoBehaviour
                     });
                 } else
                 {
-                    sceneAnimationController.HideLogInMenu();
-                    sceneAnimationController.ShowMainMenu();
-                    sceneAnimationController.loadingCanvas.SetActive(false);
-                    ResetInputs();
+                    LootLockerSDKManager.GetPlayerName((nameResponse) => {
+                        if (!nameResponse.success) errorText.text = serverError;
+                        else
+                        {
+                            username = nameResponse.name;
+                            usernameText.text = username;
+                            sceneAnimationController.HideLogInMenu();
+                            sceneAnimationController.ShowMainMenu();
+                            sceneAnimationController.loadingCanvas.SetActive(false);
+                            ResetInputs();
+                        }
+                    });
                 }
                 return;
             }
