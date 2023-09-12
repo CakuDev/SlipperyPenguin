@@ -3855,7 +3855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 102d538c50232ad488f3541f6ab30be4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 250
+  movementSpeed: 300
   maxVelocity: 10
   gravityMultiplier: 1
   animator: {fileID: 182725320}
@@ -9286,6 +9286,8 @@ GameObject:
   - component: {fileID: 1707210160}
   - component: {fileID: 1707210163}
   - component: {fileID: 1707210162}
+  - component: {fileID: 1707210164}
+  - component: {fileID: 1707210165}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -9358,6 +9360,32 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707210159}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1707210164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707210159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efa3d5b73481df4ba30aae8acdeeb01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showOnMobile: 0
+--- !u!114 &1707210165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707210159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efa3d5b73481df4ba30aae8acdeeb01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showOnMobile: 0
 --- !u!1 &1714973119
 GameObject:
   m_ObjectHideFlags: 0

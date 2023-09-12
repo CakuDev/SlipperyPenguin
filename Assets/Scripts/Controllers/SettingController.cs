@@ -8,5 +8,6 @@ public class SettingController : MonoBehaviour
     {
         QualitySettings.vSyncCount = 0; 
         Application.targetFrameRate = Screen.currentResolution.refreshRate;
+        if (Application.platform == RuntimePlatform.Android) Application.targetFrameRate = 30;
     }
 }

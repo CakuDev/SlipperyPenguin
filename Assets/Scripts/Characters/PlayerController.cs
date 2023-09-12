@@ -76,37 +76,21 @@ public class PlayerController : MonoBehaviour
     void ManageMaxVelocity()
     {
         Vector3 velocity = playerRb.velocity;
-        
-        // Manage max velocity in x axis
-        if(velocity.x >= maxVelocity)
+        if(velocity.magnitude > maxVelocity)
         {
-            velocity.x = maxVelocity;
-        } else if (velocity.x <= -maxVelocity)
-        {
-            velocity.x = -maxVelocity;
+            playerRb.velocity = velocity.normalized * maxVelocity;
         }
-
-        // Manage max velocity in z axis
-        if (velocity.z >= maxVelocity)
-        {
-            velocity.z = maxVelocity;
-        }
-        else if (velocity.z <= -maxVelocity)
-        {
-            velocity.z = -maxVelocity;
-        }
-
-        playerRb.velocity = velocity;
     }
 
     public void RotatePlayer()
     {
         Vector3 rotationVector;
-        if (direction.magnitude >= 0.2f)
+        if (direction.magnitude >= 0.3f)
         {
             rotationVector = Quaternion.FromToRotation(Vector3.back, direction.normalized).eulerAngles;
             lastRotationVector = rotationVector;
-        } else
+        }
+        else
         {
             rotationVector = lastRotationVector;
         }

@@ -8,6 +8,6 @@ public class CreditsCanvasBehaviour : MonoBehaviour
     public void HideSettingsCanvas()
     {
         sceneAnimationController.HideCreditsCanvas();
-        sceneAnimationController.ShowMainMenu();
+        sceneAnimationController.ShowMainMenuWithoutSubtitle();
     }
 }
