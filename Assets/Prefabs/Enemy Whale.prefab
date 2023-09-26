@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56d538a4c689fb64389c5e102cc0b82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 220
+  speed: 320
   launchForce: 700
   launchAngle: 2
   maxVelocity: 9

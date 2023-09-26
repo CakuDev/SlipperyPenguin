@@ -22,8 +22,7 @@ public class DestroyOnFall : MonoBehaviour
         {
             if(transform.CompareTag(Tags.PLAYER))
             {
-                GameObject.Find("Level Manager").GetComponent<LevelController>().EndGame();
-                Destroy(gameObject);
+                gameObject.GetComponent<PlayerController>().EndGame();
                 return;
             }
             objectPooling.SaveObject(gameObject);

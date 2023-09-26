@@ -251,6 +251,7 @@ public class PunctuationController : MonoBehaviour
         {
             if (response.statusCode == 200)
             {
+                List<RowInfo> rows = new();
                 for (int i = 0; i < response.items.Length; i++)
                 {
                     if (i == 50) break;
@@ -260,8 +261,20 @@ public class PunctuationController : MonoBehaviour
                     int level = int.Parse(levelTime[0]);
                     int time = int.Parse(levelTime[1]);
                     int score = currentRow.score;
+                    if(rows.Count > 0 && rows[^1].score == score && rows[^1].time > time)
+                    {
+                        rows.Insert(rows.Count - 1, new RowInfo(name, level, score, time));
+                    } else
+                    {
+                        rows.Add(new RowInfo(name, level, score, time));
+                    }
+                }
+
+                for (int i = 0; i < rows.Count; i++)
+                {
+                    RowInfo row = rows[i];
                     LeaderboardRowBehaviour rowBehaviour = Instantiate(leaderboardRowPrefab, onlineLeaderboardList).GetComponent<LeaderboardRowBehaviour>();
-                    rowBehaviour.OnCreate(i + 1, name, level, score, time);
+                    rowBehaviour.OnCreate(i + 1, row.name, row.level, row.score, row.time);
                     if (row?.name == name) rowBehaviour.HighlightRow();
                 }
                 RectTransform onlineLeaderboardRect = onlineLeaderboardList.GetComponent<RectTransform>();

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public Image itemImage;
     public AudioSource audioSource;
+    public AudioClip bubblesClip;
     public Joystick joystick;
 
     private Rigidbody playerRb;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private bool isPlatformMobile;
     [HideInInspector]
     public ItemBoxBehaviour itemBoxOverposition;
+    private bool isEnding = false;
 
     // Start is called before the first frame update
     void Start()
@@ -76,9 +78,11 @@ public class PlayerController : MonoBehaviour
     void ManageMaxVelocity()
     {
         Vector3 velocity = playerRb.velocity;
-        if(velocity.magnitude > maxVelocity)
+        if (velocity.magnitude > maxVelocity)
         {
-            playerRb.velocity = velocity.normalized * maxVelocity;
+            velocity.Normalize();
+            velocity *= maxVelocity;
+            playerRb.velocity = velocity;
         }
     }
 
@@ -110,5 +114,23 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger("Idle");
             animator.ResetTrigger("Walk");
         }
+    }
+
+    public void EndGame()
+    {
+        if (!isEnding)
+        {
+            Time.timeScale = 0.5f;
+            isEnding = true;
+            audioSource.PlayOneShot(bubblesClip);
+            Invoke(nameof(EndGameDelay), bubblesClip.length);
+        }
+    }
+
+    private void EndGameDelay()
+    {
+        Time.timeScale = 1f;
+        GameObject.Find("Level Manager").GetComponent<LevelController>().EndGame();
+        Destroy(gameObject);
     }
 }

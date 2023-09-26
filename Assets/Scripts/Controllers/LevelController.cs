@@ -77,14 +77,7 @@ public class LevelController : MonoBehaviour
     {
         StopCoroutine(timerCoroutine);
         gameController.SetGameInfo(currentLevel, score, timer);
-        string username = GameObject.FindWithTag(Tags.USER_ACCOUNT_CONTROLLER).GetComponent<UserAccountController>().username;
-        if(username != null)
-        {
-            punctuationController.LoadPunctuation();
-        } else
-        {
-
-        }
-        
+        GameObject.FindWithTag(Tags.MUSIC_CONTROLLER).GetComponent<MusicController>().SetIntroMusic();
+        punctuationController.LoadPunctuation();
     }
 }
