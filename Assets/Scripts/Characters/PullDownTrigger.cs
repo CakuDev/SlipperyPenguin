@@ -12,13 +12,7 @@ public class PullDownTrigger : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (!Physics.Raycast(transform.position, Vector3.down, out _, LayerMask.GetMask("Ground")))
-        //{
-        //    Debug.Log("PULLING DOWN!");
-        //    rb.AddForce(Vector3.down * force, ForceMode.Force);
-        //}
-
-        if(!Physics.SphereCast(transform.position, radius, Vector3.down, out RaycastHit hitInfo, maxDistance, LayerMask.GetMask("Ground")))
+        if(!Physics.SphereCast(transform.position, radius, Vector3.down, out _, maxDistance, LayerMask.GetMask("Ground")))
         {
             if (IsHoldingOnWall()) rb.AddForce(Vector3.up * force, ForceMode.Force);
             else rb.AddForce(Vector3.down * force, ForceMode.Force);
